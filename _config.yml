@@ -10,7 +10,7 @@
 ############################
 
 # Name of website
-title: My Website
+title: Maxwell Hanson
 
 # Your name to show in the footer
 author: Maxwell Hanson
@@ -49,21 +49,21 @@ round-avatar: true
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
   email: "maxhanson123@outlook.com"
-#   facebook: deanattali
   github: githubmaxds
-#   twitter: daattali
-#   patreon: DeanAttali
-#   youtube: c/daattali
+  linkedin: maxwell-hanson
+#  twitter: yourname
+#  facebook: yourname
+#  patreon: yourname
+#  youtube: c/yourname
 #  medium: yourname
 #  reddit: yourname
-#  linkedin: daattali
 #  xing: yourname
-#  stackoverflow: "3943160/daattali"
-#  snapchat: deanat78
-#  instagram: deanat78
+#  stackoverflow: "yourname"
+#  snapchat: yourname
+#  instagram: yourname
 #  spotify: yourname
 #  telephone: +14159998888
-#  steam: deanat78
+#  steam: yourname
 #  twitch: yourname
 #  yelp: yourname
 #  telegram: yourname
@@ -91,7 +91,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "MyWebsite.com"
+# url-pretty: "MyWebsite.com"
 
 # Excerpt word length - Truncate the excerpt of each post on the feed page to the specified number of words
 excerpt_length: 50
