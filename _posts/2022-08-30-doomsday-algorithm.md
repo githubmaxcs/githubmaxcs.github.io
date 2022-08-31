@@ -5,8 +5,6 @@ subtitle: Calculate the Day of the Week for a Given Date
 tags: [mathematics, modular arithmetic, doomsday algorithm]
 ---
 
-## Introduction
-
 Suppose we wish to determine the day of the week for a given date, say, June 16, 1904. We can, of course, search for the day of the week using Google, but we don’t need Google! We can use the [**Doomsday Algorithm**](https://en.wikipedia.org/wiki/Doomsday_rule). The Doomsday Algorithm, devised by the English mathematician [John Conway]( https://en.wikipedia.org/wiki/John_Horton_Conway), is a method to determine the day of the week for a given date, and in this post we’ll learn how to determine that June 16, 1904 was a Thursday.
 
 ## Gregorian Calendar
