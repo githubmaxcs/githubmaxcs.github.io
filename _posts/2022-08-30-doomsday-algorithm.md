@@ -108,3 +108,93 @@ Finally, here are the steps of the Doomsday Algorithm:
 1. Given a date, consider the century, and determine the doomsday, X, for that century. For June 16, 1904, the doomsday for 1900 is Wednesday (X = 3).
 2. Take the year of the given century, Y, and determine the doomsday for that year. For June 16, 1904 (Y = 4): $$ X + Y + \lfloor \frac{Y}{4} \rfloor = 3 + 4 + 1 \equiv 1 \ \text{mod(}7\text{)} $$ Thus, the doomsday for 1904 is Monday (1).
 3. Find the nearest doomsday date, and add/subtract to the given date. For June 16, 1904, 6/6 and 6/13 are doomsday dates, meaning June 13, 1904 was a Monday (1), so June 16, 1904 was a Thursday (4), since $1 + (16 - 13) \equiv 4 \ \text{mod(}7\text{)}$.
+
+## Python Implementation
+
+```Python
+day_dictionary = {'0':'Sunday', '1':'Monday', '2':'Tuesday', '3':'Wednesday', '4':'Thursday',\
+                  '5':'Friday', '6':'Saturday',\
+                  'Sunday':'0', 'Monday':'1', 'Tuesday':'2', 'Wednesday':'3', 'Thursday':'4',\
+                  'Friday':'5', 'Saturday':'6'}
+
+d_dates_normal = {'1/3', '1/10', '1/17', '1/24', '1/31', '2/7', '2/14', '2/21', '2/28',\
+                  '3/7', '3/14', '3/21', '3/28', '4/4', '4/11', '4/18', '4/25', '5/2',\
+                  '5/9', '5/16', '5/23', '5/30', '6/6', '6/13', '6/20', '6/27', '7/4',\
+                  '7/11', '7/18', '7/25', '8/1', '8/8', '8/15', '8/22', '8/29', '9/5',\
+                  '9/12', '9/19', '9/26', '10/3', '10/10', '10/17', '10/24', '10/31',\
+                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26'}
+d_dates_leap = {'1/4', '1/11', '1/18', '1/25', '2/1', '2/8', '2/15', '2/22', '2/29',\
+                  '3/7', '3/14', '3/21', '3/28', '4/4', '4/11', '4/18', '4/25', '5/2',\
+                  '5/9', '5/16', '5/23', '5/30', '6/6', '6/13', '6/20', '6/27', '7/4',\
+                  '7/11', '7/18', '7/25', '8/1', '8/8', '8/15', '8/22', '8/29', '9/5',\
+                  '9/12', '9/19', '9/26', '10/3', '10/10', '10/17', '10/24', '10/31',\
+                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26'}
+
+def anchor(date):
+    """The anchor function accepts a date as a string, 'M/D/YEAR', and returns the doomsday of the
+    corresponding centurial year. For example, passing '10/5/1582' will return 'Wednesday'."""
+    
+    date_list = date.split('/')
+    century = date_list[2][0:2] + '00' #string 'YE00' #
+    
+    if ((int(century) - 1500)%400 == 0):
+        return 'Wednesday'
+    elif ((int(century) - 1600)%400 == 0):
+        return 'Tuesday'
+    elif ((int(century) - 1700)%400 == 0):
+        return 'Sunday'
+    elif ((int(century) - 1800)%400 == 0):
+        return 'Friday'
+
+def doomsday_algorithm(date):
+    """The doomsday fct. accepts a date as a string, 'M/D/YEAR', and returns the day of the week. 
+    Do not enter leading zero's for single-digit months or days."""
+    
+    date_list = date.split('/')
+    anchor_value = int(day_dictionary[anchor(date)]) # corr. centurial doomsday as an integer for computation #
+    
+    month = date_list[0] # string 'M' #
+    day = date_list[1] # string 'D' #
+    century = date_list[2][0:2] + '00' #string 'YE00' #
+    year_of_century = date_list[2][2:4] # string 'AR' #
+    
+    # normal year #
+    if (int(year_of_century)%4 != 0) or\
+    ((int(year_of_century)%4 == 0) & (int(century)%100 == 0) & (not (int(century)%400 == 0))):
+        
+        year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
+        
+        d_dates_same_month = []
+        for elem in d_dates_normal:
+            compare = elem.split('/')
+            if (compare[0] == date_list[0]):
+                d_dates_same_month.append(elem)        
+        
+        d_dates_distance = []
+        for elem in d_dates_same_month:
+            compare = elem.split('/')
+            d_dates_distance.append((int(compare[1]) - int(day)))
+        
+        day_of_week = day_dictionary[str((anchor_value + min(d_dates_distance))%7)]
+        print(day_of_week)
+            
+    
+    # leap year #
+    elif ((int(year_of_century)%4 == 0) & (int(century)%100 == 0) & (int(century)%400 == 0)) or\
+    ((int(year_of_century)%4 == 0) & (not (int(century)%100 == 0))):
+        
+        year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
+        d_dates_same_month = []
+        for elem in d_dates_leap:
+            compare = elem.split('/')
+            if (compare[0] == date_list[0]):
+                d_dates_same_month.append(elem)
+        
+        d_dates_distance = []
+        for elem in d_dates_same_month:
+            compare = elem.split('/')
+            d_dates_distance.append((int(compare[1]) - int(day)))
+        
+        day_of_week = day_dictionary[str((anchor_value + min(d_dates_distance))%7)]
+        print(day_of_week)
+```
