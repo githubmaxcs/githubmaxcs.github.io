@@ -2,7 +2,7 @@
 layout: post
 title: Doomsday Algorithm
 subtitle: Calculate the Day of the Week for a Given Date
-tags: [mathematics, modular arithmetic, doomsday algorithm]
+tags: [mathematics, modular arithmetic, doomsday algorithm, python]
 ---
 
 Suppose we wish to determine the day of the week for a given date, say, June 16, 1904. We can, of course, search for the day of the week using Google, but we don’t need Google! We can use the [**Doomsday Algorithm**](https://en.wikipedia.org/wiki/Doomsday_rule). The Doomsday Algorithm, devised by the English mathematician [John Conway]( https://en.wikipedia.org/wiki/John_Horton_Conway), is a method to determine the day of the week for a given date, and in this post we’ll learn how to determine that June 16, 1904 was a Thursday.
@@ -111,7 +111,7 @@ Finally, here are the steps of the Doomsday Algorithm:
 
 ## Python Implementation
 
-```Python
+{% highlight Python linenos %}
 day_dictionary = {'0':'Sunday', '1':'Monday', '2':'Tuesday', '3':'Wednesday', '4':'Thursday',\
                   '5':'Friday', '6':'Saturday',\
                   'Sunday':'0', 'Monday':'1', 'Tuesday':'2', 'Wednesday':'3', 'Thursday':'4',\
@@ -197,4 +197,4 @@ def doomsday_algorithm(date):
         
         day_of_week = day_dictionary[str((anchor_value + min(d_dates_distance))%7)]
         print(day_of_week)
-```
+{% endhighlight %}
