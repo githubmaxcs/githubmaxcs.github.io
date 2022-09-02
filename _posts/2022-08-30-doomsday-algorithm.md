@@ -3,11 +3,10 @@ layout: post
 title: Doomsday Algorithm
 subtitle: Calculate the Day of the Week for a Given Date
 tags: [mathematics, modular arithmetic, doomsday algorithm, python]
----
-
 <script type="text/javascript" async
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+---
 
 Suppose we wish to determine the day of the week for a given date, say, June 16, 1904. We can, of course, search for the day of the week using Google, but we don’t need Google! We can use the [**Doomsday Algorithm**](https://en.wikipedia.org/wiki/Doomsday_rule). The Doomsday Algorithm, devised by the English mathematician [John Conway]( https://en.wikipedia.org/wiki/John_Horton_Conway), is a method to determine the day of the week for a given date, and in this post we’ll learn how to determine that June 16, 1904 was a Thursday.
 
@@ -15,7 +14,7 @@ Suppose we wish to determine the day of the week for a given date, say, June 16,
 
 The [Gregorian calendar]( https://en.wikipedia.org/wiki/Gregorian_calendar) was introduced by Pope Gregory XIII in October 1582, supplanting the [Julian calendar]( https://en.wikipedia.org/wiki/Julian_calendar), and that year Thursday, October 4, 1582 was followed by Friday, October 15, 1582. So, why switch calendars? Well, the motivation was the **solar year**, or the time it takes the Earth to orbit the Sun, measured between successive spring or autumn equinoxes, or summer or winter solstices. The Julian calendar assumed the average solar year has 365.25 days, hence a normal year had 365 days, and a **leap year** (every four years) had 366 days, with no exceptions; however, an actual solar year, though it varies, has roughly 365.24219 days, meaning the Julian calendar gained a day every 128 years:
 
-\\( \frac{1}{(356.25 – 365.24219)} \approx 128. \\)
+$$ \frac{1}{(356.25 – 365.24219)} \approx 128. $$
 
 Thus, to prevent the drift of the calendar, the Gregorian system implements leap years for years divisible by four, except for years divisible by 100, unless those years divisible by 100 are also divisible by 400. For example, 1700, 1800, and 1900 are _not_ leap years, but 2000 _is_ a leap year. As a result, the average calendar year over a 400-year period is shortened by 0.0075 days, becoming 365.2425 days (a value closer to the actual length of a solar year):
 
