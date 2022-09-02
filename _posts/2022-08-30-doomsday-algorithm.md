@@ -3,18 +3,15 @@ layout: post
 title: Doomsday Algorithm
 subtitle: Calculate the Day of the Week for a Given Date
 tags: [mathematics, modular arithmetic, doomsday algorithm, python]
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
 ---
 
 Suppose we wish to determine the day of the week for a given date, say, June 16, 1904. We can, of course, search for the day of the week using Google, but we don’t need Google! We can use the [**Doomsday Algorithm**](https://en.wikipedia.org/wiki/Doomsday_rule). The Doomsday Algorithm, devised by the English mathematician [John Conway]( https://en.wikipedia.org/wiki/John_Horton_Conway), is a method to determine the day of the week for a given date, and in this post we’ll learn how to determine that June 16, 1904 was a Thursday.
 
 ## Gregorian Calendar
 
-The [Gregorian calendar]( https://en.wikipedia.org/wiki/Gregorian_calendar) was introduced by Pope Gregory XIII in October 1582, supplanting the [Julian calendar]( https://en.wikipedia.org/wiki/Julian_calendar), and that year Thursday, October 4, 1582 was followed by Friday, October 15, 1582. So, why switch calendars? Well, the motivation was the **solar year**, or the time it takes the Earth to orbit the Sun, measured between successive spring or autumn equinoxes, or summer or winter solstices. The Julian calendar assumed the average solar year has 365.25 days, hence a normal year had 365 days, and a **leap year** (every four years) had 366 days, with no exceptions; however, an actual solar year, though it varies, has roughly 365.24219 days, meaning the Julian calendar gained a day every 128 years:
+The [Gregorian calendar]( https://en.wikipedia.org/wiki/Gregorian_calendar) was introduced by Pope Gregory XIII in October 1582, supplanting the [Julian calendar]( https://en.wikipedia.org/wiki/Julian_calendar), and that year Thursday, October 4, 1582 was followed by Friday, October 15, 1582. So, why switch calendars? Well, the motivation was the **solar year**, or the time it takes the Earth to orbit the Sun, measured between successive spring or autumn equinoxes, or summer or winter solstices. The Julian calendar assumed the average solar year has 365.25 days, hence a normal year had 365 days, and a **leap year** (every four years) had 366 days, with no exceptions; however, an actual solar year, though it varies, has roughly 365.24219 days, meaning the Julian calendar gained a day every 128 years: 
 
-$$ \frac{1}{(356.25 – 365.24219)} \approx 128. $$
+$$\frac{1}{(356.25 – 365.24219)} \approx 128.$$
 
 Thus, to prevent the drift of the calendar, the Gregorian system implements leap years for years divisible by four, except for years divisible by 100, unless those years divisible by 100 are also divisible by 400. For example, 1700, 1800, and 1900 are _not_ leap years, but 2000 _is_ a leap year. As a result, the average calendar year over a 400-year period is shortened by 0.0075 days, becoming 365.2425 days (a value closer to the actual length of a solar year):
 
@@ -55,11 +52,11 @@ Thus, if today is Monday (1), in seven days, of course, we will return to Monday
 
 Further, we observe that a one-year period (without a leap year) results in a one-day offset:
 
-$$ 365 \equiv 1 \ \text{mod(}7\text{)}, $$
+$$365 \equiv 1 \ \text{mod(}7\text{)},$$
 
 whereas a 400-year period results in a zero-day offset, accounting for the Gregorian system of leap years:
 
-$$ 400 + \frac{400}{4} – \frac{400}{100} + \frac{400}{400} \equiv 0 \ \text{mod(}7\text{)}. $$
+$$400 + \frac{400}{4} – \frac{400}{100} + \frac{400}{400} \equiv 0 \ \text{mod(}7\text{)}.$$
 
 ## Doomsday Algorithm
 
@@ -88,15 +85,15 @@ Second, we establish the doomsday for each centurial year (e.g., 1500, 1600, 170
 
 Now, I'm writing as of August 30, 2022, so the nearest doomsday date is August 29, 2022 (8/22), which I know was a Monday. Thus, the doomsday for the year 2022 is Monday. Further, there have been 5 leap years since 2000, so we obtain the offset from 2000 to 2022:
 
-$$ 22 + \lfloor \frac{22}{4} \rfloor = 22 + 5 = 27 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)}, $$
+$$22 + \lfloor \frac{22}{4} \rfloor = 22 + 5 = 27 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)},$$
 
 where $\lfloor x \rfloor$ ("floor of x") is the greatest integer smaller than $x$. We find the doomsday for 2000 is Tuesday, since Monday (1) + 1 is Tuesday (2). Repeating the process, noting that 2000 _is_ a leap year, we obtain the offset from 1900 to 2000:
 
-$$ 100 + \lfloor \frac{100}{4} \rfloor = 100 + 25 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)} $$
+$$100 + \lfloor \frac{100}{4} \rfloor = 100 + 25 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)}$$
 
 We find the doomsday for 1900 is Wednesday, since Tuesday (2) + 1 is Wednesday (3). Again, repeating the process, noting that 1900 is _not_ a leap year, we obtain the offset from 1800 to 1900:
 
-$$ 100 + \lfloor \frac{100}{4} \rfloor - \lfloor \frac{100}{100} \rfloor = 100 + 25 - 1 \equiv 5 \ \text{mod(}7\text{)} \equiv -2 \ \text{mod(}7\text{)} $$
+$$100 + \lfloor \frac{100}{4} \rfloor - \lfloor \frac{100}{100} \rfloor = 100 + 25 - 1 \equiv 5 \ \text{mod(}7\text{)} \equiv -2 \ \text{mod(}7\text{)}$$
 
 We find the doomsday for 1800 is Friday, since Wednesday (3) + 2 is Friday (5). We can repeat the process for each centurial year, obtaining the following results:
 
