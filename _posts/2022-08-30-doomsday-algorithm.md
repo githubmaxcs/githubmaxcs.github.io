@@ -21,7 +21,7 @@ $$\frac{1}{400} \left( (365 \times 400) + (1 \times \frac{400}{4}) - (1 \times \
 
 For a more detailed look at modular arithmetic, see [_Wikipedia_](https://en.wikipedia.org/wiki/Modular_arithmetic). 
 
-Here, we consider integers modulo 7, letting $n$ be an integer ($n \in \mathbb{Z}$, where $\mathbb{Z}$ is the set of integers):
+Here, we consider integers modulo 7, letting $n$ be an integer (\(n \in \mathbb{Z}\), where \(\mathbb{Z}\) is the set of integers):
 
 
 | Equivalence Class | $n = 0$                    | $n = 1$                         |  $n = -1$                   | cont’d |
