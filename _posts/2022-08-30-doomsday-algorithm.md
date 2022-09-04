@@ -87,7 +87,7 @@ Now, I'm writing as of August 30, 2022, so the nearest doomsday date is August 2
 
 $$22 + \lfloor \frac{22}{4} \rfloor = 22 + 5 = 27 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)},$$
 
-where $\lfloor x \rfloor$ ("floor of x") is the greatest integer smaller than $x$. We find the doomsday for 2000 is Tuesday, since Monday (1) + 1 is Tuesday (2). Repeating the process, noting that 2000 _is_ a leap year, we obtain the offset from 1900 to 2000:
+where \\(\lfloor x \rfloor\\) ("floor of x") is the greatest integer smaller than \\(x\\). We find the doomsday for 2000 is Tuesday, since Monday (1) + 1 is Tuesday (2). Repeating the process, noting that 2000 _is_ a leap year, we obtain the offset from 1900 to 2000:
 
 $$100 + \lfloor \frac{100}{4} \rfloor = 100 + 25 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)}$$
 
