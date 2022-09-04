@@ -24,15 +24,15 @@ For a more detailed look at modular arithmetic, see [_Wikipedia_](https://en.wik
 Here, we consider integers modulo 7, letting $n$ be an integer (\\(n \in \mathbb{Z}\\), where \\(\mathbb{Z}\\) is the set of integers):
 
 
-| Equivalence Class | $n = 0$                    | $n = 1$                         |  $n = -1$                   | cont’d |
+| Equivalence Class | \\(n = 0\\)                    | \\(n = 1\\)                         |  \\(n = -1\\)                   | cont’d |
 | :-------------------:   | :-----------------------: | :------------------------: | :------------------------:   | :---: |
-| $\{0 + 7(n)\}$       | 0 $\equiv$ 0 mod(7)  | 7 $\equiv$ 0 mod(7)   | -7 $\equiv$ 0 mod(7)  | ...     |
-| $\{1 + 7(n)\}$       | 1 $\equiv$ 1 mod(7)  | 8 $\equiv$ 1 mod(7)   | -6 $\equiv$ 0 mod(7)  | ...     |
-| $\{2 + 7(n)\}$       | 2 $\equiv$ 2 mod(7)  | 9 $\equiv$ 2 mod(7)   | -5 $\equiv$ 0 mod(7)  | ...     |
-| $\{3 + 7(n)\}$       | 3 $\equiv$ 3 mod(7)  | 10 $\equiv$ 3 mod(7) | -4 $\equiv$ 0 mod(7)  | ...     |
-| $\{4 + 7(n)\}$       | 4 $\equiv$ 4 mod(7)  | 11 $\equiv$ 4 mod(7) | -3 $\equiv$ 0 mod(7)  | ...     |
-| $\{5 + 7(n)\}$       | 5 $\equiv$ 5 mod(7)  | 12 $\equiv$ 5 mod(7) | -2 $\equiv$ 0 mod(7)  | ...     |
-| $\{6 + 7(n)\}$       | 6 $\equiv$ 6 mod(7)  | 13 $\equiv$ 6 mod(7) | -1 $\equiv$ 0 mod(7)  | ...     |
+| \\(\{0 + 7(n)\}\\)       | 0 \\(\equiv\\) 0 mod(7)  | 7 \\(\equiv\\) 0 mod(7)   | -7 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{1 + 7(n)\}\\)       | 1 \\(\equiv\\) 1 mod(7)  | 8 \\(\equiv\\) 1 mod(7)   | -6 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{2 + 7(n)\}\\)       | 2 \\(\equiv\\) 2 mod(7)  | 9 \\(\equiv\\) 2 mod(7)   | -5 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{3 + 7(n)\}\\)       | 3 \\(\equiv\\) 3 mod(7)  | 10 \\(\equiv\\) 3 mod(7) | -4 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{4 + 7(n)\}\\)       | 4 \\(\equiv\\) 4 mod(7)  | 11 \\(\equiv\\) 4 mod(7) | -3 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{5 + 7(n)\}\\)       | 5 \\(\equiv\\) 5 mod(7)  | 12 \\(\equiv\\) 5 mod(7) | -2 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{6 + 7(n)\}\\)       | 6 \\(\equiv\\) 6 mod(7)  | 13 \\(\equiv\\) 6 mod(7) | -1 \\(\equiv\\) 0 mod(7)  | ...     |
 
 So, 0, 7, -7, 14, -14, and so on, are **congruent**, or equivalent, modulo 7. In total, we have seven **equivalence classes** for integers modulo 7.
 
@@ -48,7 +48,7 @@ Since we have seven days in a week, we label the days as follows:
 | Friday <br> (Fiveday)             |   5   |
 | Saturday <br> (Sixday)           |   6   |
 
-Thus, if today is Monday (1), in seven days, of course, we will return to Monday: $1 + 7 = 8 \equiv 1 \ \text{mod(}7\text{)}$. Presto! 
+Thus, if today is Monday (1), in seven days, of course, we will return to Monday: \\(1 + 7 = 8 \equiv 1 \ \text{mod(}7\text{)}\\). Presto! 
 
 Further, we observe that a one-year period (without a leap year) results in a one-day offset:
 
@@ -107,7 +107,7 @@ We find the doomsday for 1800 is Friday, since Wednesday (3) + 2 is Friday (5). 
 Finally, here are the steps of the Doomsday Algorithm:
 1. Given a date, consider the century, and determine the doomsday, X, for that century. For June 16, 1904, the doomsday for 1900 is Wednesday (X = 3).
 2. Take the year of the given century, Y, and determine the doomsday for that year. For June 16, 1904 (Y = 4): $$ X + Y + \lfloor \frac{Y}{4} \rfloor = 3 + 4 + 1 \equiv 1 \ \text{mod(}7\text{)} $$ Thus, the doomsday for 1904 is Monday (1).
-3. Find the nearest doomsday date, and add/subtract to the given date. For June 16, 1904, 6/6 and 6/13 are doomsday dates, meaning June 13, 1904 was a Monday (1), so June 16, 1904 was a Thursday (4), since $1 + (16 - 13) \equiv 4 \ \text{mod(}7\text{)}$.
+3. Find the nearest doomsday date, and add/subtract to the given date. For June 16, 1904, 6/6 and 6/13 are doomsday dates, meaning June 13, 1904 was a Monday (1), so June 16, 1904 was a Thursday (4), since \\(1 + (16 - 13) \equiv 4 \ \text{mod(}7\text{)}\\).
 
 ## Python Implementation
 
