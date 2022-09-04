@@ -112,30 +112,31 @@ Finally, here are the steps of the Doomsday Algorithm:
 ## Python Implementation
 
 {% highlight Python linenos %}
-day_dictionary = {'0':'Sunday', '1':'Monday', '2':'Tuesday', '3':'Wednesday', '4':'Thursday',\
-                  '5':'Friday', '6':'Saturday',\
-                  'Sunday':'0', 'Monday':'1', 'Tuesday':'2', 'Wednesday':'3', 'Thursday':'4',\
-                  'Friday':'5', 'Saturday':'6'}
+day_dictionary = {'0':'Sunday', 'Sunday':'0', '1':'Monday', 'Monday':'1',\
+                  '2':'Tuesday', 'Tuesday':'2', '3':'Wednesday', 'Wednesday':'3',\
+                  '4':'Thursday', 'Thursday':'4', '5':'Friday', 'Friday':'5',\
+                  '6':'Saturday', 'Saturday':'6'}
 
-d_dates_normal = {'1/3', '1/10', '1/17', '1/24', '1/31', '2/7', '2/14', '2/21', '2/28',\
+ddates_normal = ['1/3', '1/10', '1/17', '1/24', '1/31', '2/7', '2/14', '2/21', '2/28',\
                   '3/7', '3/14', '3/21', '3/28', '4/4', '4/11', '4/18', '4/25', '5/2',\
                   '5/9', '5/16', '5/23', '5/30', '6/6', '6/13', '6/20', '6/27', '7/4',\
                   '7/11', '7/18', '7/25', '8/1', '8/8', '8/15', '8/22', '8/29', '9/5',\
                   '9/12', '9/19', '9/26', '10/3', '10/10', '10/17', '10/24', '10/31',\
-                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26'}
-d_dates_leap = {'1/4', '1/11', '1/18', '1/25', '2/1', '2/8', '2/15', '2/22', '2/29',\
+                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26']
+ddates_leap = ['1/4', '1/11', '1/18', '1/25', '2/1', '2/8', '2/15', '2/22', '2/29',\
                   '3/7', '3/14', '3/21', '3/28', '4/4', '4/11', '4/18', '4/25', '5/2',\
                   '5/9', '5/16', '5/23', '5/30', '6/6', '6/13', '6/20', '6/27', '7/4',\
                   '7/11', '7/18', '7/25', '8/1', '8/8', '8/15', '8/22', '8/29', '9/5',\
                   '9/12', '9/19', '9/26', '10/3', '10/10', '10/17', '10/24', '10/31',\
-                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26'}
+                  '11/7', '11/14', '11/21', '11/28', '12/5', '12/12', '12/19', '12/26']
 
 def anchor(date):
-    """The anchor function accepts a date as a string, 'M/D/YEAR', and returns the doomsday of the
-    corresponding centurial year. For example, passing '10/5/1582' will return 'Wednesday'."""
+    """The anchor function accepts a date as a string, 'M/D/YYYY', and returns the doomsday of the
+    corresponding centurial year. For example, passing '10/5/1582' will return 'Wednesday',
+    since the corresponding centurial year is '1500'."""
     
     date_list = date.split('/')
-    century = date_list[2][0:2] + '00' #string 'YE00' #
+    century = date_list[2][0:2] + '00'
     
     if ((int(century) - 1500)%400 == 0):
         return 'Wednesday'
@@ -145,56 +146,74 @@ def anchor(date):
         return 'Sunday'
     elif ((int(century) - 1800)%400 == 0):
         return 'Friday'
-
-def doomsday_algorithm(date):
-    """The doomsday fct. accepts a date as a string, 'M/D/YEAR', and returns the day of the week. 
-    Do not enter leading zero's for single-digit months or days."""
+    
+def is_leap(date):
+    """The is_leap function accepts a date as a string, 'M/D/YYYY', and returns True/False if the year, 
+    YYYY, is/is not, respectively, a leap year. For example, passing May 4, 1900 will return False."""
     
     date_list = date.split('/')
-    anchor_value = int(day_dictionary[anchor(date)]) # corr. centurial doomsday as an integer for computation #
+    year = date_list[2]
     
-    month = date_list[0] # string 'M' #
-    day = date_list[1] # string 'D' #
-    century = date_list[2][0:2] + '00' #string 'YE00' #
-    year_of_century = date_list[2][2:4] # string 'AR' #
+    # years not divisible by 4 #
+    if (int(year)%4 != 0):
+        return False
+    
+    # years divisible by 4, but not 100 #
+    if ((int(year)%4 == 0) & (not (int(year)%100 == 0))):
+        return True
+    
+    # years divisible by 4 and 100, but not 400 #
+    if ((int(year)%4 == 0) & (int(year)%100 == 0) & (not (int(year)%400 == 0))):
+        return False
+    
+    # years divisible by 4, 100, and 400 #
+    if ((int(year)%4 == 0) & (int(year)%100 == 0) & (int(year)%400 == 0)):
+        return True
+
+def doomsday_algorithm(date):
+    """The doomsday_algorithm function accepts a date as a string, 'M/D/YYYY', and returns the day of the week. 
+    For example, passing '6/4/1904 will return 'Thursday'."""
+    
+    date_list = date.split('/')
+    anchor_value = int(day_dictionary[anchor(date)])
+    (month, day, year_of_century) = (date_list[0], date_list[1], date_list[2][2:4])
     
     # for a normal (non-leap) year #
-    if (int(year_of_century)%4 != 0) or\
-    ((int(year_of_century)%4 == 0) & (int(century)%100 == 0) & (not (int(century)%400 == 0))):
+    if (not is_leap(date)):
         
         year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
         
-        d_dates_same_month = []
-        for elem in d_dates_normal:
+        ddates_same_month = []
+        for elem in ddates_normal:
             compare = elem.split('/')
-            if (compare[0] == date_list[0]):
-                d_dates_same_month.append(elem)        
+            if (compare[0] == month):
+                ddates_same_month.append(elem)        
         
-        d_dates_distance = []
-        for elem in d_dates_same_month:
+        ddates_distance = []
+        for elem in ddates_same_month:
             compare = elem.split('/')
-            d_dates_distance.append((int(compare[1]) - int(day)))
+            ddates_distance.append(abs(int(compare[1]) - int(day)))
         
-        day_of_week = day_dictionary[str((anchor_value + min(d_dates_distance))%7)]
+        day_of_week = day_dictionary[str((year_doomsday + min(ddates_distance))%7)]
         print(day_of_week)
             
     
     # for a leap year #
-    elif ((int(year_of_century)%4 == 0) & (int(century)%100 == 0) & (int(century)%400 == 0)) or\
-    ((int(year_of_century)%4 == 0) & (not (int(century)%100 == 0))):
+    elif (is_leap(date)):
         
         year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
-        d_dates_same_month = []
-        for elem in d_dates_leap:
-            compare = elem.split('/')
-            if (compare[0] == date_list[0]):
-                d_dates_same_month.append(elem)
         
-        d_dates_distance = []
-        for elem in d_dates_same_month:
+        ddates_same_month = []
+        for elem in ddates_leap:
             compare = elem.split('/')
-            d_dates_distance.append((int(compare[1]) - int(day)))
+            if (compare[0] == month):
+                ddates_same_month.append(elem)        
         
-        day_of_week = day_dictionary[str((anchor_value + min(d_dates_distance))%7)]
+        ddates_distance = []
+        for elem in ddates_same_month:
+            compare = elem.split('/')
+            ddates_distance.append(abs(int(compare[1]) - int(day)))
+        
+        day_of_week = day_dictionary[str((year_doomsday + min(ddates_distance))%7)]
         print(day_of_week)
 {% endhighlight %}
