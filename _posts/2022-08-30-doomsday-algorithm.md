@@ -9,22 +9,22 @@ Suppose we wish to determine the day of the week for a given date, say, June 16,
 
 ## Gregorian Calendar
 
-The [Gregorian calendar]( https://en.wikipedia.org/wiki/Gregorian_calendar) was introduced by Pope Gregory XIII in October 1582, supplanting the [Julian calendar]( https://en.wikipedia.org/wiki/Julian_calendar), and that year Thursday, October 4, 1582 was followed by Friday, October 15, 1582. So, why switch calendars? Well, the motivation was the **solar year**, or the time it takes the Earth to orbit the Sun, measured between successive spring or autumn equinoxes, or summer or winter solstices. The Julian calendar assumed the average solar year had 365.25 days, hence a normal year had 365 days, and a **leap year** (every four years) had 366 days, with no exceptions; however, an actual solar year, though it varies, has roughly 365.24219 days, meaning the Julian calendar gained a day every 128 years: 
+The [Gregorian calendar]( https://en.wikipedia.org/wiki/Gregorian_calendar) was introduced by Pope Gregory XIII in October 1582, supplanting the [Julian calendar]( https://en.wikipedia.org/wiki/Julian_calendar), and that year Thursday, October 4, 1582 was followed by Friday, October 15, 1582. So, why switch calendars? Well, the motivation was the **solar year**, or the time it takes the Earth to orbit the Sun, which can be measured between successive spring or autumn equinoxes, or summer or winter solstices. The Julian calendar assumed the average solar year had 365.25 days, hence a normal year had 365 days, and a **leap year** (every four years) had 366 days, with no exceptions; however, an actual solar year, though it varies, has roughly 365.24219 days, meaning the Julian calendar gained a day every 128 years: 
 
 $$\frac{1}{(356.25 – 365.24219)} \approx 128.$$
 
-Thus, to prevent the drift of the calendar, the Gregorian system implements leap years for years divisible by four, except for years divisible by 100, unless those years divisible by 100 are also divisible by 400. For example, 1700, 1800, and 1900 are _not_ leap years, but 2000 _is_ a leap year. As a result, the average calendar year over a 400-year period is shortened by 0.0075 days, becoming 365.2425 days (a value closer to the actual length of a solar year):
+Thus, to prevent the drift of the calendar, the Gregorian system implements leap years for years divisible by four, except for years divisible by 100, unless those years divisible by 100 are also divisible by 400. For example, 1700, 1800, and 1900 are not leap years, but 2000 is a leap year. As a result, the average calendar year over a 400-year period is shortened by 0.0075 days, becoming 365.2425 days (a value closer to the actual length of a solar year):
 
 $$\frac{1}{400} \left( (365 \times 400) + (1 \times \frac{400}{4}) - (1 \times \frac{400}{100}) + (1 \times \frac{400}{400}) \right) = 365.2425.$$
 
 ## Modular Arithmetic
 
-For a more detailed look at modular arithmetic, see [_Wikipedia_](https://en.wikipedia.org/wiki/Modular_arithmetic). 
+With [**modular arithmetic**](https://en.wikipedia.org/wiki/Modular_arithmetic), we impose a structure on the integers (..., -2, -1, 0, 1, 2, ...) such that we identify a number with the remainder after dividing said number by the **modulus**, the defining divisor. For example, a 12-hour clock uses _integers modulo 12_, where 12 is the modulus, and we identify 8 o'clock with 20 o'clock (8 \\(\equiv\\) 20 mod(12)), since dividing 20 by 12 results in a remainder of 8. We say 8 and 20 are **congruent**, or equivalent, modulo 12. Further, there are 12 **congruence classes**, or sets of congruent numbers, since the structure cycles according to the modulus 12. Such a congruence class is \\(\{0 + 12(n): n \in \mathbb{Z}\}\\), where \\(\mathbb{Z}\\) is the set of integers, so we have 0, -12, 12, -24, 24, and so on, in the same congruence class.
 
-Here, we consider integers modulo 7, letting $n$ be an integer (\\(n \in \mathbb{Z}\\), where \\(\mathbb{Z}\\) is the set of integers):
+Here, we consider integers modulo 7:
 
 
-| Equivalence Class | \\(n = 0\\)                    | \\(n = 1\\)                         |  \\(n = -1\\)                   | cont’d |
+| Congruence Class | \\(n = 0\\)                    | \\(n = 1\\)                         |  \\(n = -1\\)                   | cont’d |
 | :-------------------:   | :-----------------------: | :------------------------: | :------------------------:   | :---: |
 | \\(\{0 + 7(n)\}\\)       | 0 \\(\equiv\\) 0 mod(7)  | 7 \\(\equiv\\) 0 mod(7)   | -7 \\(\equiv\\) 0 mod(7)  | ...     |
 | \\(\{1 + 7(n)\}\\)       | 1 \\(\equiv\\) 1 mod(7)  | 8 \\(\equiv\\) 1 mod(7)   | -6 \\(\equiv\\) 0 mod(7)  | ...     |
@@ -33,8 +33,6 @@ Here, we consider integers modulo 7, letting $n$ be an integer (\\(n \in \mathbb
 | \\(\{4 + 7(n)\}\\)       | 4 \\(\equiv\\) 4 mod(7)  | 11 \\(\equiv\\) 4 mod(7) | -3 \\(\equiv\\) 0 mod(7)  | ...     |
 | \\(\{5 + 7(n)\}\\)       | 5 \\(\equiv\\) 5 mod(7)  | 12 \\(\equiv\\) 5 mod(7) | -2 \\(\equiv\\) 0 mod(7)  | ...     |
 | \\(\{6 + 7(n)\}\\)       | 6 \\(\equiv\\) 6 mod(7)  | 13 \\(\equiv\\) 6 mod(7) | -1 \\(\equiv\\) 0 mod(7)  | ...     |
-
-So, 0, 7, -7, 14, -14, and so on, are **congruent**, or equivalent, modulo 7. In total, we have seven **equivalence classes** for integers modulo 7.
 
 Since we have seven days in a week, we label the days as follows:
 
@@ -87,15 +85,15 @@ Now, I'm writing as of August 30, 2022, so the nearest doomsday date is August 2
 
 $$22 + \lfloor \frac{22}{4} \rfloor = 22 + 5 = 27 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)},$$
 
-where \\(\lfloor x \rfloor\\) ("floor of x") is the greatest integer smaller than \\(x\\). We find the doomsday for 2000 is Tuesday, since Monday (1) + 1 is Tuesday (2). Repeating the process, noting that 2000 _is_ a leap year, we obtain the offset from 1900 to 2000:
+where \\(\lfloor x \rfloor\\) ("floor of x") is the greatest integer smaller than \\(x\\). We find the doomsday for 2000 is Tuesday, since Monday (1) + 1 is Tuesday (2). Repeating the process, noting that 2000 is a leap year, we obtain the offset from 1900 to 2000:
 
 $$100 + \lfloor \frac{100}{4} \rfloor = 100 + 25 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)}$$
 
-We find the doomsday for 1900 is Wednesday, since Tuesday (2) + 1 is Wednesday (3). Again, repeating the process, noting that 1900 is _not_ a leap year, we obtain the offset from 1800 to 1900:
+We find the doomsday for 1900 is Wednesday, since Tuesday (2) + 1 is Wednesday (3). Again, repeating the process, noting that 1900 is not a leap year, we obtain the offset from 1800 to 1900:
 
 $$100 + \lfloor \frac{100}{4} \rfloor - \lfloor \frac{100}{100} \rfloor = 100 + 25 - 1 \equiv 5 \ \text{mod(}7\text{)} \equiv -2 \ \text{mod(}7\text{)}$$
 
-We find the doomsday for 1800 is Friday, since Wednesday (3) + 2 is Friday (5). We can repeat the process for each centurial year, obtaining the following results:
+We find the doomsday for 1800 is Friday, since Wednesday (3) + 2 is Friday (5). We can repeat the process for the offset from 1700 to 1800, and we find the doomsday for 1700 is Sunday. Since the Gregorian calendar has a cycle of 400 years (as we saw there was a zero-day offset), we now have the doomsday for each centurial year:
 
 | Wednesday | Tuesday | Sunday | Friday |
 | :---:     | :---:   | :---:  | :---:  |
@@ -106,7 +104,7 @@ We find the doomsday for 1800 is Friday, since Wednesday (3) + 2 is Friday (5). 
 
 Finally, here are the steps of the Doomsday Algorithm:
 1. Given a date, consider the century, and determine the doomsday, X, for that century. For June 16, 1904, the doomsday for 1900 is Wednesday (X = 3).
-2. Take the year of the given century, Y, and determine the doomsday for that year. For June 16, 1904 (Y = 4): $$ X + Y + \lfloor \frac{Y}{4} \rfloor = 3 + 4 + 1 \equiv 1 \ \text{mod(}7\text{)} $$ Thus, the doomsday for 1904 is Monday (1).
+2. Take the year of the given century, Y, and determine the doomsday for that year. For June 16, 1904 (Y = 4): $$ X + Y + \lfloor \frac{Y}{4} \rfloor = 3 + 4 + 1 \equiv 1 \ \text{mod(}7\text{)}. $$ Thus, the doomsday for 1904 is Monday (1).
 3. Find the nearest doomsday date, and add/subtract to the given date. For June 16, 1904, 6/6 and 6/13 are doomsday dates, meaning June 13, 1904 was a Monday (1), so June 16, 1904 was a Thursday (4), since \\(1 + (16 - 13) \equiv 4 \ \text{mod(}7\text{)}\\).
 
 ## Python Implementation
