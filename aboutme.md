@@ -8,7 +8,7 @@ I was born and raised in Springfield, OH, where I attended Shawnee High School, 
 
 As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python. 
 
-You can contact me through [email](mailto: maxhanson123@outlook.com) or [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
+Please send me an [email](mailto: maxhanson123@outlook.com) or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
 ### More About Me
 
@@ -17,6 +17,10 @@ For hobbies, I enjoy travelling, playing chess, and reading.
 #### Travelling
 
 I enjoy travelling, and I have been fortunate enough to visit a number of countries, including Chile, Ireland, and Japan.
+
+| ![Alaskan Husky Adventures in Willow, AK](/assets/img/ak-aha.png) |
+| :---------------------------------------------------------------: |
+| Alaskan Husky Adventures in Willow, AK, photobombed by a bee!     |
 
 #### Chess
 
