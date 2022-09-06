@@ -8,7 +8,7 @@ I was born and raised in Springfield, OH, where I attended Shawnee High School, 
 
 As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. In the workplace, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python. 
 
-You can contact me through < a href="mailto:maxhanson123@outlook.com">email< /a> or [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
+You can contact me through [email](maxhanson123@outlook.com) or [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
 ### More About Me
 
