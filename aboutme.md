@@ -28,7 +28,7 @@ I enjoy playing chess on [Chess.com](https://www.chess.com/member/ienjoysomeches
 
 #### Reading
 
-I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Now, my reads are more involved (e.g., _The Divine Comedy_, _Ulysses_, and _Infinite Jest_).
+I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Now, my reads are more involved:
 
 | ![A grid of some of my favorite books!](/assets/img/book-grid.png) |
 | :----------------------------------------------------------------: |
