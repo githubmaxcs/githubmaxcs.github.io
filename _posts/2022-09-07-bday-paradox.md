@@ -23,7 +23,7 @@ for which we detail some specific probabilities:
 | 23      | 50.7           |
 | 70      | 99.9           |
 
-### Mathematica Implementation
+## Mathematica Implementation
 
 {% highlight Mathematica linenos %}
 pTwoShareBday = 1 - Product[((365 - i)/365), {i, 0, n - 1}];
@@ -40,7 +40,7 @@ BdayList = Table[N[Refine[pTwoShareBday, n == k]], {k, 1, 23}]
 | :-------------------------------------------:  |
 | Birthday Paradox up to 100 People              |
 
-### Python Implementation
+## Python Implementation
 
 {% highlight Python linenos %}
 import numpy as np
