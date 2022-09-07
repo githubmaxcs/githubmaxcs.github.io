@@ -25,12 +25,12 @@ for which we detail some specific probabilities:
 
 ### Mathematica Implementation
 
-```Mathematica
+---
 pTwoShareBday = 1 - Product[((365 - i)/365), {i, 0, n - 1}];
 ListPlot[Table[pTwoShareBday, {n, 1, 100}], 
  AxesLabel -> {"# of People in a Room", "P(2 Share a Birthday)"}]
 BdayList = Table[N[Refine[pTwoShareBday, n == k]], {k, 1, 23}]
-```
+---
 
 | ![Birthday Paradox up to 23 People](/assets/img/wa-bday-paradox-23.png) |
 | :------------------------------------------: |
