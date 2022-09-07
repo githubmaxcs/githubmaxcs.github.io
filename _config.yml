@@ -50,6 +50,7 @@ round-avatar: true
 social-network-links:
   email: "maxhanson123@outlook.com"
   github: githubmaxds
+  kaggle: kagglemaxds
   linkedin: maxwell-hanson
 #  twitter: yourname
 #  facebook: yourname
@@ -72,7 +73,6 @@ social-network-links:
 #  ORCID: your ORCID ID
 #  google-scholar: your google scholar
 #  discord: invite/invite_code or users/userid 
-#  kaggle: yourname
 #  hackerrank: yourname
 
 # If you want your website to generate an RSS feed, provide a description
