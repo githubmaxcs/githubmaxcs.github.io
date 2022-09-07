@@ -13,7 +13,7 @@ $$P(n) = 1 - \prod_{i = 0}^{n - 1} \frac{365 - i}{365},$$
 
 for which we detail some specific probabilities:
 
-| \\(n\\) | \\( P \\) |
+| \\(n\\) | \\(P\\) (%)    |
 |:------: | :------------: |
 | 1       | 0              |
 | 5       | 2.7            |
