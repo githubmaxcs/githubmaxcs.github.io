@@ -4,11 +4,13 @@ title: About Me
 subtitle: Mathematics, Physics Undergraduate at University of Wisconsin-Madison
 ---
 
-I'm Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers, who encouraged me in STEM. Now, I'm a fourth-year undergraduate studying mathematics and physics at the University of Wisconsin-Madison. While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in statistics and programming, hoping to find a complementary career. 
+Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I could ruminate on problems in mathematics, computer science, and physics for a lifetime.
 
-As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python. 
+Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers, who encouraged me in STEM. Now, I'm a fourth-year undergraduate studying mathematics and physics at the University of Wisconsin-Madison. While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in statistics and programming, hoping to find a complementary career. 
 
-Please send me an [email](mailto: maxhanson123@outlook.com) or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
+As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python.
+
+I expect to graduate May 2023, and I am applying for job positions. Please send me an [email](mailto: maxhanson123@outlook.com), or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
 ### More About Me
 
@@ -32,7 +34,7 @@ I enjoy playing chess on [Chess.com](https://www.chess.com/member/ienjoysomeches
 
 #### Reading
 
-I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Now, my reads are more involved (e.g., _The Divine Comedy_, _Ulysses_, and _Infinite Jest_).
+I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Now, my reads are more involved!
 
 | ![A grid of some of my favorite books!](/assets/img/book-grid.png) |
 | :----------------------------------------------------------------: |
