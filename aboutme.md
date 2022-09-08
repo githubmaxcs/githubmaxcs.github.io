@@ -4,7 +4,7 @@ title: About Me
 subtitle: Mathematics, Physics Undergraduate at University of Wisconsin-Madison
 ---
 
-Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I could ruminate on problems in math, computer science, and physics for a lifetime.
+Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I could ruminate on problems in mathematics, computer science, and physics for a lifetime.
 
 Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers, who encouraged me in STEM. Now, I'm a fourth-year undergraduate studying mathematics and physics at the University of Wisconsin-Madison. While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in statistics and programming, hoping to find a complementary career. 
 
