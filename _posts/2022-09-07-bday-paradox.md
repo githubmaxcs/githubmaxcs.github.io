@@ -2,7 +2,7 @@
 layout: post
 title: Birthday Paradox
 subtitle: In a Room, Do Two People Share a Birthday?
-tags: [mathematics, birthday paradox, mathematica, python]
+tags: [mathematics, birthday paradox, python, mathematica]
 ---
 
 What is the probability that, in a set of \\(n\\) randomly chosen people, at least two people share a birthday? The question is innocent, but the [birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem) says that the probability exceeds \\(50\%\\) in a set of just 23 people. The result is counter-intuitive, as the product of probabilities is often counter-intuitive, but it's important to remember that there are \\((23 \times 22)/2 = 253\\) pairs for a set of 23. Mathematically, in a set of \\(n\\) people, the probability that at least two people share a birthday is:
