@@ -23,23 +23,6 @@ for which we detail some specific probabilities:
 | 23      | 50.7           |
 | 70      | 99.9           |
 
-## Mathematica Implementation
-
-{% highlight Mathematica linenos %}
-pTwoShareBday = 1 - Product[((365 - i)/365), {i, 0, n - 1}];
-ListPlot[Table[pTwoShareBday, {n, 1, 100}], 
- AxesLabel -> {"# of People in a Room", "P(2 Share a Birthday)"}]
-BdayList = Table[N[Refine[pTwoShareBday, n == k]], {k, 1, 23}]
-{% endhighlight %}
-
-| ![Birthday Paradox up to 23 People](/assets/img/wa-bday-paradox-23.png) |
-| :------------------------------------------: |
-| Birthday Paradox up to 23 People             |
-
-| ![Birthday Paradox up to 100 People](/assets/img/wa-bday-paradox-100.png) |
-| :-------------------------------------------:  |
-| Birthday Paradox up to 100 People              |
-
 ## Python Implementation
 
 {% highlight Python linenos %}
@@ -72,3 +55,12 @@ of {:.0f} (randomly chosen) people is {:.2f}%.".format(num, 100*(1 - prod)))
 | ![Birthday Paradox up to 100 People](/assets/img/python-bday-paradox-100.jpg) |
 | :-------------------------------------------:  |
 | Birthday Paradox up to 100 People              |
+
+## Mathematica Implementation
+
+{% highlight Mathematica linenos %}
+pTwoShareBday = 1 - Product[((365 - i)/365), {i, 0, n - 1}];
+ListPlot[Table[pTwoShareBday, {n, 1, 100}], 
+ AxesLabel -> {"# of People in a Room", "P(2 Share a Birthday)"}]
+BdayList = Table[N[Refine[pTwoShareBday, n == k]], {k, 1, 23}]
+{% endhighlight %}
