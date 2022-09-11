@@ -181,19 +181,14 @@ def doomsday_algorithm(date):
         
         year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
         
-        ddates_same_month = []
+        ddates_distance = []
         for elem in ddates_normal:
             compare = elem.split('/')
             if (compare[0] == month):
-                ddates_same_month.append(elem)        
+                ddates_distance.append(int(compare[1]) - int(day))        
         
-        ddates_distance = []
-        for elem in ddates_same_month:
-            compare = elem.split('/')
-            ddates_distance.append(abs(int(compare[1]) - int(day)))
-        
-        day_of_week = day_dictionary[str((year_doomsday + min(ddates_distance))%7)]
-        print(day_of_week)
+        day_of_week = day_dictionary[str((year_doomsday - ddates_distance[0])%7)]
+        print(year_doomsday, ddates_distance, day_of_week)
             
     
     # for a leap year #
@@ -201,17 +196,12 @@ def doomsday_algorithm(date):
         
         year_doomsday = (anchor_value + (int(year_of_century) + (int(year_of_century)//4)))%7
         
-        ddates_same_month = []
+        ddates_distance = []
         for elem in ddates_leap:
             compare = elem.split('/')
             if (compare[0] == month):
-                ddates_same_month.append(elem)        
+                ddates_distance.append(int(compare[1]) - int(day))        
         
-        ddates_distance = []
-        for elem in ddates_same_month:
-            compare = elem.split('/')
-            ddates_distance.append(abs(int(compare[1]) - int(day)))
-        
-        day_of_week = day_dictionary[str((year_doomsday + min(ddates_distance))%7)]
-        print(day_of_week)
+        day_of_week = day_dictionary[str((year_doomsday - ddates_distance[0])%7)]
+        print(year_doomsday, ddates_distance, day_of_week)
 {% endhighlight %}
