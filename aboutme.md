@@ -8,7 +8,7 @@ Coming from a family of educators, I value curiosity and learning, from reading 
 
 Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers, who encouraged me in STEM. Now, I'm a fourth-year undergraduate studying mathematics and physics at the University of Wisconsin-Madison. While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in statistics and programming, hoping to find a complementary career. 
 
-As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python.
+As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using Python and R.
 
 I expect to graduate May 2023, and I am applying for job positions. Please send me an [email](mailto: maxhanson123@outlook.com), or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
