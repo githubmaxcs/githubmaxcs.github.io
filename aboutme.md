@@ -14,15 +14,7 @@ I expect to graduate May 2023, and I am applying for job positions. Please send 
 
 ### More About Me
 
-For hobbies, I enjoy travelling, playing chess, and reading.
-
-#### Travelling
-
-I enjoy travelling, and I have been fortunate enough to visit a number of countries, including Chile, Ireland, and Japan.
-
-| ![Alaskan Husky Adventures in Willow, AK](/assets/img/ak-aha.png) |
-| :---------------------------------------------------------------: |
-| Alaskan Husky Adventures in Willow, AK, photobombed by a bee!     |
+For hobbies, I enjoy playing chess and reading!
 
 #### Chess
 
@@ -34,7 +26,7 @@ I enjoy playing chess on [Chess.com](https://www.chess.com/member/ienjoysomeches
 
 #### Reading
 
-I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Now, my reads are more involved!
+I have enjoyed reading since childhood, where I encountered books such as _Magic Tree House_ and _The Little Prince_. Check out some of my favorite books!
 
 | ![A grid of some of my favorite books!](/assets/img/book-grid.png) |
 | :----------------------------------------------------------------: |
