@@ -17,4 +17,6 @@ From the company's perspective, we have the following questions:
 
 We have the following database schema for the scale model cars database:
 
-![Scale Model Cars Database Schema](/assets/img/storesdb_schema.png)
+| ![Scale Model Cars Database Schema](/assets/img/storesdb_schema.png) |
+| :------------------------------------------------------------------: |
+| The Schema of the Scale Model Cars Database                          |
