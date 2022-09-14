@@ -20,3 +20,36 @@ We have the following database schema for the scale model cars database:
 | ![Scale Model Cars Database Schema](/assets/img/storesdb_schema.png) |
 | :------------------------------------------------------------------: |
 | The Schema of the Scale Model Cars Database                          |
+
+There are 8 tables: (1) customers (customer data), (2) employees (emplyee information), (3) offices (sales office information), (4) orders (customers' sales orders), (5) orderdetails (product codes and order line number), (6) payments (customers' payment records), (7) products (a list of scale model cars), and (8) productlines (a list of product line categories).
+
+```SQL
+CREATE TABLE Summary (table_name TEXT, number_of_attributes INTEGER, number_of_rows INTEGER)
+
+INSERT INTO Summary  VALUES ('customers',
+  (SELECT COUNT(*) FROM pragma_table_info('customers')),
+  (SELECT COUNT(*) FROM customers));
+INSERT INTO Summary  VALUES ('employees',
+  (SELECT COUNT(*) FROM pragma_table_info('employees')),
+  (SELECT COUNT(*) FROM employees));
+INSERT INTO Summary  VALUES ('offices',
+  (SELECT COUNT(*) FROM pragma_table_info('offices')),
+  (SELECT COUNT(*) FROM offices));
+INSERT INTO Summary  VALUES ('orderdetails',
+  (SELECT COUNT(*) FROM pragma_table_info('orderdetails')),
+  (SELECT COUNT(*) FROM orderdetails));
+INSERT INTO Summary  VALUES ('orders',
+  (SELECT COUNT(*) FROM pragma_table_info('orders')),
+  (SELECT COUNT(*) FROM orders));
+INSERT INTO Summary  VALUES ('payments',
+  (SELECT COUNT(*) FROM pragma_table_info('payments')),
+  (SELECT COUNT(*) FROM payments));
+INSERT INTO Summary  VALUES ('productlines',
+  (SELECT COUNT(*) FROM pragma_table_info('productlines')),
+  (SELECT COUNT(*) FROM productlines));
+INSERT INTO Summary  VALUES ('products',
+  (SELECT COUNT(*) FROM pragma_table_info('products')),
+  (SELECT COUNT(*) FROM products));
+
+SELECT * FROM Summary;
+```
