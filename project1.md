@@ -21,7 +21,11 @@ We have the following database schema for the scale model cars database:
 | :------------------------------------------------------------------: |
 | The Schema of the Scale Model Cars Database                          |
 
-There are 8 tables: (1) customers (customer data), (2) employees (emplyee information), (3) offices (sales office information), (4) orders (customers' sales orders), (5) orderdetails (product codes and order line number), (6) payments (customers' payment records), (7) products (a list of scale model cars), and (8) productlines (a list of product line categories).
+There are 8 tables: (1) customers (customer data), (2) employees (emplyee information), (3) offices (sales office information), (4) orders (customers' sales orders), (5) orderdetails (product codes and order line number), (6) payments (customers' payment records), (7) products (a list of scale model cars), and (8) productlines (a list of product line categories). Using [DB Browser for SQLite](https://sqlitebrowser.org/dl/), we can view tables with the "Browse Data" function:
+
+| ![SQLite Browse Data Function](/assets/img/sqlite-browse-data.png) |
+| :----------------------------------------------------------------: |
+| SQLite Browse Data Function (Viewing "orders" Table)               |
 
 ```SQL
 CREATE TABLE Summary (table_name TEXT, number_of_attributes INTEGER, number_of_rows INTEGER)
