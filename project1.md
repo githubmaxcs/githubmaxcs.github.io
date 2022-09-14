@@ -27,33 +27,45 @@ There are 8 tables: (1) customers (customer data), (2) employees (emplyee inform
 | :----------------------------------------------------------------: |
 | SQLite Browse Data Function (Viewing "orders" Table)               |
 
-```SQL
-CREATE TABLE Summary (table_name TEXT, number_of_attributes INTEGER, number_of_rows INTEGER)
+Further, we can create a "summary" table, with the number of columns (attributes) and the number of rows for each table in the database:
 
-INSERT INTO Summary  VALUES ('customers',
+```SQL
+CREATE TABLE summary (table_name TEXT, number_of_attributes INTEGER, number_of_rows INTEGER)
+
+INSERT INTO summary  VALUES ('customers',
   (SELECT COUNT(*) FROM pragma_table_info('customers')),
   (SELECT COUNT(*) FROM customers));
-INSERT INTO Summary  VALUES ('employees',
+INSERT INTO summary  VALUES ('employees',
   (SELECT COUNT(*) FROM pragma_table_info('employees')),
   (SELECT COUNT(*) FROM employees));
-INSERT INTO Summary  VALUES ('offices',
+INSERT INTO summary  VALUES ('offices',
   (SELECT COUNT(*) FROM pragma_table_info('offices')),
   (SELECT COUNT(*) FROM offices));
-INSERT INTO Summary  VALUES ('orderdetails',
+INSERT INTO summary  VALUES ('orderdetails',
   (SELECT COUNT(*) FROM pragma_table_info('orderdetails')),
   (SELECT COUNT(*) FROM orderdetails));
-INSERT INTO Summary  VALUES ('orders',
+INSERT INTO summary  VALUES ('orders',
   (SELECT COUNT(*) FROM pragma_table_info('orders')),
   (SELECT COUNT(*) FROM orders));
-INSERT INTO Summary  VALUES ('payments',
+INSERT INTO summary  VALUES ('payments',
   (SELECT COUNT(*) FROM pragma_table_info('payments')),
   (SELECT COUNT(*) FROM payments));
-INSERT INTO Summary  VALUES ('productlines',
+INSERT INTO summary  VALUES ('productlines',
   (SELECT COUNT(*) FROM pragma_table_info('productlines')),
   (SELECT COUNT(*) FROM productlines));
-INSERT INTO Summary  VALUES ('products',
+INSERT INTO summary  VALUES ('products',
   (SELECT COUNT(*) FROM pragma_table_info('products')),
   (SELECT COUNT(*) FROM products));
 
-SELECT * FROM Summary;
+SELECT * FROM summary;
 ```
+| table_name       | number_of_attributes | number_of_rows  |
+| :--------------: | :------------------: | :-------------: |
+| customers        | 13                   | 122             |
+| employees        | 8                    | 23              |
+| offices          | 9                    | 7               |
+| orderdetails     | 5                    | 2996            |
+| orders           | 7                    | 326             |
+| payments         | 4                    | 273             |
+| productlines     | 4                   | 7               |
+| products         | 9                    | 110             |
