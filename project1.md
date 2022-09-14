@@ -67,5 +67,13 @@ SELECT * FROM summary;
 | orderdetails     | 5                    | 2996            |
 | orders           | 7                    | 326             |
 | payments         | 4                    | 273             |
-| productlines     | 4                   | 7               |
+| productlines     | 4                    | 7               |
 | products         | 9                    | 110             |
+
+## Addressing Questions
+
+Now, we're more familiar with the database, so we can begin addressing some questions.
+
+### Question 1
+
+
