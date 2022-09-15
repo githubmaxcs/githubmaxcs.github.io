@@ -22,6 +22,7 @@ author: Maxwell Hanson
 navbar-links:
   Portfolio:
     - Predicting Weather: "/portfolio/project1"
+    - Predicting Weather NB: "portfolio/madison-weather-project"
   About Me: "aboutme"
   Resume: "/assets/img/resume-hanson-maxwell.pdf"
   Resources:
