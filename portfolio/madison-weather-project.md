@@ -1,3 +1,8 @@
+---
+title: Predicting Madison, WI Weather with Machine Learning
+subtitle: Code, Inspired by DataQuest
+---
+
 ## Read and Explore Data
 
 
