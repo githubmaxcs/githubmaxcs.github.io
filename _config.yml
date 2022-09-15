@@ -20,6 +20,8 @@ author: Maxwell Hanson
 ###############################################
 
 navbar-links:
+  Portfolio:
+    - Predicting Weather: "/portfolio/project1"
   About Me: "aboutme"
   Resume: "/assets/img/resume-hanson-maxwell.pdf"
   Resources:
