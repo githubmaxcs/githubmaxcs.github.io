@@ -1,5 +1,3 @@
-# Predicting Weather with ML
-
 ## Read and Explore Data
 
 
