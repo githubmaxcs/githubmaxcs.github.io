@@ -21,13 +21,13 @@ weather.columns
 
 
 
-    Index(['STATION', 'NAME', 'ACMH', 'ACSH', 'AWND', 'FMTM', 'PGTM', 'PRCP',
-           'PSUN', 'SNOW', 'SNWD', 'TAVG', 'TMAX', 'TMIN', 'TSUN', 'WDF1', 'WDF2',
-           'WDF5', 'WDFG', 'WDFM', 'WESD', 'WSF1', 'WSF2', 'WSF5', 'WSFG', 'WSFM',
-           'WT01', 'WT02', 'WT03', 'WT04', 'WT05', 'WT06', 'WT07', 'WT08', 'WT09',
-           'WT10', 'WT11', 'WT13', 'WT14', 'WT15', 'WT16', 'WT17', 'WT18', 'WT19',
-           'WT21', 'WT22', 'WV03'],
-          dtype='object')
+Index(['STATION', 'NAME', 'ACMH', 'ACSH', 'AWND', 'FMTM', 'PGTM', 'PRCP',
+      'PSUN', 'SNOW', 'SNWD', 'TAVG', 'TMAX', 'TMIN', 'TSUN', 'WDF1', 'WDF2',
+      'WDF5', 'WDFG', 'WDFM', 'WESD', 'WSF1', 'WSF2', 'WSF5', 'WSFG', 'WSFM',
+      'WT01', 'WT02', 'WT03', 'WT04', 'WT05', 'WT06', 'WT07', 'WT08', 'WT09',
+      'WT10', 'WT11', 'WT13', 'WT14', 'WT15', 'WT16', 'WT17', 'WT18', 'WT19',
+      'WT21', 'WT22', 'WV03'],
+      dtype='object')
 
 
 
