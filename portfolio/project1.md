@@ -1,5 +1,5 @@
 ---
-title: Predicting the Weather with Machine Learning
+title: Predicting Madison, WI Weather with Machine Learning
 subtitle: Inspired by DataQuest
 author: Maxwell Hanson
 ---
