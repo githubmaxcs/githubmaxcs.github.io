@@ -1556,6 +1556,7 @@ core_weather['snow_depth'] = core_weather['snow_depth'].fillna(0)
 
 ### Checking Ourselves
 
+Let's re-run some code to check ourselves, making sure there are no longer missing values, as the documentation mentions that entries of 9's (i.e., 9999) indicates missing values. We'll also convert our dates to pandas DateTime.
 
 ```python
 # let's re-run some code to confirm there are no longer missing values
@@ -1594,7 +1595,7 @@ core_weather.dtypes
 
 
 ```python
-# let's convert the indices (dates) to pandas datetime, which allows for more powerful indexing
+# let's convert the indices (dates) to pandas DateTime, which allows for more powerful indexing
 print(core_weather.index)
 
 core_weather.index = pd.to_datetime(core_weather.index)
@@ -1637,6 +1638,7 @@ core_weather.apply(lambda x: (x==9999).sum())
 
 ## Analyzing the Data
 
+Now, we can take a look at some of the data, though this isn't our main focus.
 
 ```python
 # let's plot the maximum and minimum temperature across time
@@ -1653,13 +1655,12 @@ core_weather[['temp_max', 'temp_min']].plot(title='Max/Min Temperature each Year
 
 
     
-![png](output_35_1.png)
+![png](project1_out1.png)
     
 
-
+We don't notice any large gaps in the data, but we can view the value counts for each year:
 
 ```python
-# we don't notice any large gaps in the data, but we can view the value counts for each year
 core_weather.index.year.value_counts().sort_index()
 ```
 
@@ -1722,13 +1723,13 @@ core_weather.groupby(core_weather.index.year).sum()['snowfall'].loc[1940:2022]\
 
 
     
-![png](output_38_1.png)
+![png](project1_out2.png)
     
 
 
 ## Training a Machine Learning Model
 
-Now, we ask the question: What do we want to predict? Well, we could think about precipitation or snowfall, but, for any given date, we'll more likely be interested in temperature, especially in the summer months. Let's focus on the maximum temperature, 'temp_max'.
+Now, we ask the question: What do we want to predict? Well, we could think about precipitation or snowfall, but, for any given date, we'll more likely be interested in temperature, especially in the summer months. Let's focus on the maximum temperature, 'temp_max'. We first create a 'target column, which contains the shifted entries of 'temp_max', so that the entry for 'target' for a given date is the following day's entry for 'temp_max'.
 
 
 ```python
@@ -1889,7 +1890,7 @@ core_weather
 
 
 ```python
-# we ignore the last row containing the missing value we created
+# we can ignore the last row containing the missing value we created
 core_weather = core_weather.iloc[:-1].copy()
 core_weather
 ```
@@ -2041,7 +2042,7 @@ core_weather
 
 ### Machine Learning
 
-We will use the 'Ridge' regression model from'scikitlearn'.
+We will use the Ridge regression model from 'sklearn', as Ridge regression avoids overfitting, in addition to having other [favorable features](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html).
 
 
 ```python
@@ -2056,7 +2057,7 @@ reg = Ridge(alpha=.1)
 predictors = ['precip', 'snowfall', 'snow_depth', 'temp_max', 'temp_min']
 ```
 
-We split our data into a training data set and a test data set, and we'll predict more recent weather data from older data, defining the split to be the end of 2020.
+We split our data into a training data set and a test data set, and we'll predict more recent weather data from older data, defining the split to be the end of 2020. (Note: We don't want to use more recent data to predict older data, since we would be using information we wouldn't otherwise have for predictions, which can lead to overfitting.)
 
 
 ```python
@@ -2104,7 +2105,7 @@ mean_absolute_error(test['target'], predictions)
 
 
 
-We find, on average, we are roughly 6.04 degrees Farenheit from the actual value; of course, this result isn't great.
+When we find the mean absolute error of our predictions, we find we are roughly 6.04 degrees Farenheit from the actual value; of course, this result isn't great. So, let's evaluate our model, and see if we can make some improvements.
 
 ### Evaluating Our Model
 
@@ -2218,19 +2219,13 @@ combined.plot(title='Actual vs. Predicted Values of Max. Temperature in Madison,
 
 
 
-    [Text(0.5, 0, 'Date'), Text(0, 0.5, 'Maximum Temperature (F)')]
-
-
-
-
     
-![png](output_57_1.png)
+![png](project1_out3.png)
     
-
+We can see how the predictors are being used (weighted) in the model:
 
 
 ```python
-# let's see how the predictors are being used in the model
 reg.coef_
 ```
 
@@ -2243,6 +2238,7 @@ reg.coef_
 
 ### Prediction Function
 
+Now, we'll work on improving our model; however, so we don't copy and paste a lot of code, we'll define a 'create_predicitions' function which allows us to streamline the model predictions.
 
 ```python
 def create_predictions(predictors, core_weather, reg):
@@ -2258,6 +2254,7 @@ def create_predictions(predictors, core_weather, reg):
 
 ### Rolling Mean and New Predictors
 
+We're going to define a rolling mean for the maximum temperature every 30 days, since perhaps the information of the average maximum temperature for a period of 30 days we help make predictions. Again, we'll have to remove the missing values we create.
 
 ```python
 # let's find the rolling mean every 30 days for 'temp_max'
@@ -2422,7 +2419,7 @@ core_weather
 </div>
 
 
-
+Further, let's consider the difference between a day's maximum temperature and the average temperature for the past 30 days, and let's consider the range between maximum and minimum temperature:
 
 ```python
 # we can determine how different the mothly average temperature is from the day's temperature
@@ -2435,6 +2432,7 @@ core_weather['month_day_max'] = core_weather['month_max'] - core_weather['temp_m
 core_weather['max_min'] = core_weather['temp_max'] - core_weather['temp_min']
 ```
 
+We'll add these newly created columns as predictors, and here we'll remove the missing values we created from the rolling mean:
 
 ```python
 # let's add our new columns as predictors
@@ -2635,7 +2633,7 @@ core_weather
 </div>
 
 
-
+OK, let's call our previously defined function:
 
 ```python
 # call our previously defined function
@@ -2653,7 +2651,7 @@ error
 
     5.967879900130934
 
-
+We see that we have reduced our error slightly, from 6.042483798575727 to 5.967879900130934. It's not a significant difference, but adding predictors helped to reduce the error.
 
 
 ```python
@@ -2664,13 +2662,8 @@ combined.plot(title='Actual vs. Predicted Values of Max. Temperature in Madison,
 
 
 
-    [Text(0.5, 0, 'Date'), Text(0, 0.5, 'Maximum Temperature (F)')]
-
-
-
-
     
-![png](output_70_1.png)
+![png](project1_out4.png)
     
 
 
@@ -2774,6 +2767,7 @@ combined
 
 ### More Predictors
 
+Let's add even more predictors:
 
 ```python
 # we create a monthly average, being careful not to use more recent data to calculate older averages
@@ -3002,7 +2996,7 @@ core_weather
 </div>
 
 
-
+We run our previously defined function with our new predictors:
 
 ```python
 # run the previously define function
@@ -3014,7 +3008,6 @@ error, combined = create_predictions(predictors, core_weather, reg)
 
 
 ```python
-# we further reduce our error
 error
 ```
 
@@ -3023,13 +3016,14 @@ error
 
     5.664913922849373
 
+We have further reduced our error, from 6.042483798575727 to 5.967879900130934 to 5.664913922849373. The predicitons are not great, but we have built a simple model, and we've managed to reduce our error. Of course, there's a lot more we can do with this model, but let's conclude by looking at how the model performed.
 
 
 ### Model Diagnostics
 
 
 ```python
-# see how the predictors are being used in the model
+# we see how the predictors are being used in the model
 reg.coef_
 ```
 
