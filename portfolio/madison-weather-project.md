@@ -1655,7 +1655,7 @@ core_weather[['temp_max', 'temp_min']].plot(title='Max/Min Temperature each Year
 
 
     
-![png](project1_out1.png)
+![jpg](/assets/img/project1_out1.jpg)
     
 
 We don't notice any large gaps in the data, but we can view the value counts for each year:
@@ -1723,7 +1723,7 @@ core_weather.groupby(core_weather.index.year).sum()['snowfall'].loc[1940:2022]\
 
 
     
-![png](project1_out2.png)
+![jpg](/assets/img/project1_out2.jpg)
     
 
 
@@ -2220,7 +2220,7 @@ combined.plot(title='Actual vs. Predicted Values of Max. Temperature in Madison,
 
 
     
-![png](project1_out3.png)
+![jpg](/assets/img/project1_out3.jpg)
     
 We can see how the predictors are being used (weighted) in the model:
 
@@ -2663,7 +2663,7 @@ combined.plot(title='Actual vs. Predicted Values of Max. Temperature in Madison,
 
 
     
-![png](project1_out4.png)
+![jpg](/assets/img/project1_out4.jpg)
     
 
 
