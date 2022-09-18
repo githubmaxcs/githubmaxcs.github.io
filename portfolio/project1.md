@@ -897,7 +897,7 @@ core_weather[pd.isnull(core_weather['snow_depth'])]
 <p>67 rows × 5 columns</p>
 </div>
 
-Again, when we inspect the instances of missing values for the 'snow_depth' column, we find that the missing values are clustered according to month and year; otherwise the missing values are isolated instances. In fact, a lot of missing values are from October and November 1997. (Note: there are more missing values for `snow_depth` than `snowfall`.) In observing the days surrounding the missing values, most of the entries for `snow_depth` are 0.0. We can, again, return counts for each value in the `snow_depth` column, expecting that, of course, a majority of days do not have snow accumulation:
+Again, when we inspect the instances of missing values for the `snow_depth` column, we find that the missing values are clustered according to month and year; otherwise the missing values are isolated instances. In fact, a lot of missing values are from October and November 1997. (Note: there are more missing values for `snow_depth` than `snowfall`.) In observing the days surrounding the missing values, most of the entries for `snow_depth` are 0.0. We can, again, return counts for each value in the `snow_depth` column, expecting that, of course, a majority of days do not have snow accumulation:
 
 ```python
 core_weather['snow_depth'].value_counts()
