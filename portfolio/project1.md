@@ -1388,7 +1388,7 @@ mean_absolute_error(test['target'], predictions)
 
     6.042483798575727
 
-Using `mean_absolute_error`, when we find the mean absolute error of our predictions, we find we are (on average) 6.04 degrees Farenheit from the actual value; of course, this result isn't great, but predicting weather is difficult. So, let's evaluate our model, and let's see if we can make some improvements.
+Using `mean_absolute_error`, we find we are (on average) 6.04 degrees Farenheit from the actual values; of course, this result isn't great, but predicting weather is difficult. So, let's evaluate our model, and let's see if we can make some improvements.
 
 ### Evaluating Model, Iteration One
 
