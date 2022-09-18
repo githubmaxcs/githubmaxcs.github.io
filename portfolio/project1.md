@@ -2258,7 +2258,7 @@ reg.coef_
     array([-2.43004159, -0.91615688, -0.12344935,  0.3174611 ,  0.18783492,
             0.15277721, -0.16468398,  0.12962624,  0.11979533,  0.21604161])
 
-Next, we observe that most of the predictors are highly correlated with the traget (actual) values, which is what we want for Ridge Regression:
+Next, we observe that most of the predictors are highly correlated with the target (actual) values, which is what we want for Ridge Regression:
 
 ```python
 core_weather.corr()['target']
@@ -2277,7 +2277,7 @@ core_weather.corr()['target']
     day_of_year_avg    0.899946
     Name: target, dtype: float64
 
-We now, on average, that our predictions are 5.66 degrees off from the target (actual) values, but let's see where the differences are the greatest:
+We know, on average, that our predictions are 5.66 degrees off from the target (actual) values, but let's see where the differences are the greatest:
 
 ```python
 combined['diff'] = (combined['actual'] - combined['predictions']).abs()
