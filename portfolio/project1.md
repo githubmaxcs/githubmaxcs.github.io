@@ -181,7 +181,7 @@ core_weather.apply(lambda x: (x==9999).sum())
     temp_min      0.0
     dtype: float64
 
-So, we don't have any entries of 9's, but we do have missing values for `snowfall` and `snow_depth`, though the percentage of missing values for eeach column is very small. Let's inspect the instances of missing values so that we can proceed with data analysis and building a model.
+So, we don't have any entries of 9's, but we do have missing values for `snowfall` and `snow_depth`, though the percentage of missing values for each column is very small. Let's inspect the instances of missing values so that we can proceed with data analysis and building a model.
 
 ### Snowfall
 
