@@ -4,11 +4,9 @@ subtitle: Inspired by DataQuest
 author: Maxwell Hanson
 ---
 
-While I edit this page, please view the [jupyter notebook markdown](https://githubmaxds.github.io/portfolio/madison-weather-project/), or download the [jupyter notebook](/portfolio/madison-weather-project.ipynb).
-
 ## Introduction
 
-The goal of this project is to predict weather in Python using data from the Dane County Regional Airport (Madison, WI). You can request the [data](https://www.ncdc.noaa.gov/cdo-web/search), and [view the documentation](https://www.ncei.noaa.gov/cdo-web/datasets#GHCND).
+The goal of this project is to predict weather in Python using data from the Dane County Regional Airport (Madison, WI). You can request the [data](https://www.ncdc.noaa.gov/cdo-web/search), and [view the documentation](https://www.ncei.noaa.gov/cdo-web/datasets#GHCND). Also, download the [jupyter notebook](/portfolio/madison-weather-project.ipynb).
 
 According to the documentation (p.5), there are five core data values: `PRCP` (precipitation in inches), `SNOW` (snowfall in inches), `SNWD` (snow depth in inches), `TMAX` (maximum temperature in Fahrenheit), and `TMIN` (minimum temperature in Fahrenheit), and the core values are indexed by `DATE` (year, month, and day). The data from the Dane County Regional Airport spans from October 01, 1939 (1939-10-01) to September 10, 2022 (2022-09-10), as of my data request on Wednesday, September 14, 2022. We will use the core values as predictors when applying Ridge Regression, or Tikhonov Regularization, with scikit-learn.
 
