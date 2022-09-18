@@ -1509,7 +1509,7 @@ We want this information for comparison, as we will add more predictors to the m
 
 ### Prediction Function
 
-Now, we'll work on improving our model; however, so we don't copy and paste a lot of code, we'll define a `create_predicitions` function which allows us to streamline the model predictions.
+Now, we'll work on improving our model; however, so we don't copy and paste a lot of code, we'll define a `create_predictions` function which allows us to streamline the model predictions.
 
 ```python
 def create_predictions(predictors, core_weather, reg):
