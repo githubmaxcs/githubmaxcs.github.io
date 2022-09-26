@@ -1,3 +1,9 @@
+---
+title: Analyzing UW-Madison GPA
+author: Maxwell Hanson
+date: 9/25/2022
+---
+
 ## Introduction
 
 The University of Wisconsin, Madison (UW-Madison) has [public
