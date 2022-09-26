@@ -29,22 +29,6 @@ women). Let’s examine the data:
     ## Delimiter: ","
     ## chr (5): id, academic_year, semester, class, season
     ## dbl (3): year, count, gpa
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-    spec(madgpa)
-
-    ## cols(
-    ##   id = col_character(),
-    ##   academic_year = col_character(),
-    ##   year = col_double(),
-    ##   semester = col_character(),
-    ##   class = col_character(),
-    ##   count = col_double(),
-    ##   gpa = col_double(),
-    ##   season = col_character()
-    ## )
 
     madgpa %>% head(n = 12)
 
