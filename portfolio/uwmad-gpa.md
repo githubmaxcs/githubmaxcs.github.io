@@ -88,7 +88,7 @@ data into `men`, `women`, and `total`.
       ggtitle('GPA of Men at UW-Madison by Semester (2014-2022)') +
       labs(color = 'Class')
 
-![](uwmad-gpa_files/figure-markdown_strict/men-class-gpa-1.png)
+![png](assets/img/men-class-gpa.png)
 
     madgpa %>% 
       filter(id == 'women') %>% 
@@ -104,7 +104,7 @@ data into `men`, `women`, and `total`.
       ggtitle('GPA of Women at UW-Madison by Semester (2014-2022)') +
       labs(color = 'Class')
 
-![](uwmad-gpa_files/figure-markdown_strict/women-class-gpa-1.png)
+![png](assets/img/women-class-gpa.png)
 
     madgpa %>% 
       filter(id == 'total') %>% 
@@ -120,7 +120,7 @@ data into `men`, `women`, and `total`.
       ggtitle('Total GPA at UW-Madison by Semester (2014-2022)') +
       labs(color = 'Class')
 
-![](uwmad-gpa_files/figure-markdown_strict/total-class-gpa-1.png)
+![png](assets/img/total-class-gpa.png)
 
 There are some interesting observations about GPA from the graphs:
 
@@ -159,7 +159,7 @@ Spring for any academic year:
       ggtitle('Student Population at UW-Madison by Class (2014-2022)') +
       labs(color = 'Class')
 
-![](uwmad-gpa_files/figure-markdown_strict/total-count-gpa-1.png)
+![png](assets/img//total-count-gpa.png)
 
 On average, by how much does the freshmen student population fall from
 Fall to Spring in an academic year? Ans: 3100.
@@ -191,7 +191,7 @@ women in GPA. We find that the women dominate:
       scale_x_discrete(labels = c('Men', 'Women')) +
       labs(fill = 'ID')
 
-![](uwmad-gpa_files/figure-markdown_strict/men-women-box-1.png)
+![png](assets/img/men-women-box.png)
 
 ## Conclusion
 
