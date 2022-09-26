@@ -42,7 +42,6 @@ of {:.0f} (randomly chosen) people is {:.2f}%.".format(num, 100*(1 - prod)))
     plt.plot(np.linspace(1, num, num), (1 - prod_ar), '.r')
     plt.xlabel('Number of People')
     plt.ylabel('Probability that at least 2 Share a B-Day')
-#     plt.savefig(f'bday-paradox-{num}.jpg',bbox_inches='tight', dpi=150)
     plt.show()
 {% endhighlight %}
 
