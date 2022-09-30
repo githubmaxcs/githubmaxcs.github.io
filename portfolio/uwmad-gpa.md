@@ -1,5 +1,5 @@
 ---
-title: Analyzing UW-Madison GPA
+title: Analyzing UW-Madison GPA with R
 author: Maxwell Hanson
 date: 9/25/2022
 ---
