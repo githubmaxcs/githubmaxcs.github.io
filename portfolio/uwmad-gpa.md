@@ -183,6 +183,34 @@ women in GPA. We find that the women dominate:
 
 ![png](/assets/img/men-women-box.png)
 
+      madgpa %>% 
+      filter(id != 'total') %>%
+      ggplot(aes(x = gpa, color = id)) +
+      geom_histogram(binwidth = 0.1,
+                     center = 3.0,
+                     position = position_dodge2(preserve = "single")) +
+      scale_x_continuous(n.breaks = 12) +
+      xlab('GPA') +
+      ylab('Generalized Count for Cont. Dist.') +
+      ggtitle('GPA for Men and Women at UW-Madison by Class (2014-2022)') +
+      facet_wrap(~class) +
+      labs(color = 'ID')
+
+![png](uwmad-gpa_files/figure-markdown_strict/men-women-histogram.png)
+
+    madgpa %>% 
+      filter(id != 'total') %>%
+      ggplot(aes(x = gpa, fill = id)) +
+      geom_density(alpha = 0.5) +
+      scale_x_continuous(n.breaks = 12) +
+      xlab('GPA') +
+      ylab('Generalized Count for Cont. Dist.') +
+      ggtitle('GPA for Men and Women at UW-Madison by Class (2014-2022)') +
+      facet_wrap(~class) +
+      labs(fill = 'ID')
+
+![png](uwmad-gpa_files/figure-markdown_strict/men-women-density.png)
+
 ## Conclusion
 
 Again, there’s a lot more data, and there’s a lot more to do with the
