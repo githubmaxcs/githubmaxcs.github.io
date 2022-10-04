@@ -196,7 +196,7 @@ women in GPA. We find that the women dominate:
       facet_wrap(~class) +
       labs(color = 'ID')
 
-![png](uwmad-gpa_files/figure-markdown_strict/men-women-histogram.png)
+![png](/assets/img/men-women-histogram.png)
 
     madgpa %>% 
       filter(id != 'total') %>%
@@ -209,7 +209,7 @@ women in GPA. We find that the women dominate:
       facet_wrap(~class) +
       labs(fill = 'ID')
 
-![png](uwmad-gpa_files/figure-markdown_strict/men-women-density.png)
+![png](/assets/img/men-women-density.png)
 
 ## Conclusion
 
