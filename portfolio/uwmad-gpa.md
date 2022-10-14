@@ -14,7 +14,7 @@ the data is stored in PDFs, which is convenient for reading but less so
 for data analysis, so I have only extracted the aggregate information of
 GPA, excluding grade distributions, school-specific data, and
 program-specific data. Further data extraction would require an
-automated reader for PDF…or determination. The goal of this project is
+automated reader for PDFs…or determination. The goal of this project is
 to analyze said aggregate information of GPA. As a last note, you can
 also find [public data with a
 dashboard](https://registrar.wisc.edu/enrollment-reports/) of enrollment
