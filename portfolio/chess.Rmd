@@ -1,0 +1,1216 @@
+---
+title: "My Chess: Chess.com and Lichess"
+author: "Maxwell Hanson"
+output: md_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(chessR)
+```
+
+## Introduction
+
+I enjoy playing on [Chess.com](https://www.chess.com/member/ienjoysomechess) and [Lichess](https://lichess.org/@/iEnjoySomeChess) under the moniker *iEnjoySomeChess*. (Challenge me!) I'm an amateur chess player, but I've been following high-level chess tournaments since 2016, when Magnus Carlsen defended his world championship title against Sergey Karjakin in New York City. I began playing on Chess.com and Lichess in 2016 and 2017, respectively, so I have years of data, which I will analyze using `tidyverse`, `lubridate`, and `chessR` in RStudio.
+
+## ChessR: Extracting Data
+
+I'm using the package [ChessR](https://github.com/JaseZiv/chessR) to extract data from Chess.com and Lichess. The `ChessR` functions query an API, which is rate limited; the limit is unknown for Chess.com, but the limit is 15 games per second for Lichess. Then, I write the data to CSV's, so that I can quickly load the data in the future.
+
+```{r get-game-data, eval = FALSE}
+
+# Chess.com
+my_chesscom_data_raw <- get_game_data(usernames = 'iEnjoySomeChess')
+
+write_csv(my_chesscom_data_raw,
+          file = 'my_chesscom_data_raw.csv',
+          na = 'NA')
+
+# Lichess
+my_lichess_data_raw <- get_raw_lichess(player_names = 'iEnjoySomeChess')
+
+write_csv(my_lichess_data_raw, 
+          file = 'my_lichess_data_raw.csv',
+          na = 'NA')
+```
+
+```{r read-data, include = FALSE}
+my_chesscom_data_raw <- read_csv('my_chesscom_data_raw.csv')
+
+my_lichess_data_raw <- read_csv('my_lichess_data_raw.csv')
+```
+
+## Cleaning the Data
+
+### Chess.com
+
+Extracting the data from Chess.com, there are 36 variables, and each row has information about a single game. I keep, rename, and edit the core variables, and I create other useful variables:
+
+-   `site`: In this case, `Chess.com`.
+-   `event`: The time category determined by `time_control`. For example, `bullet` (fast), `blitz` (fast but slower than `bullet`), `rapid` (slow and slower than `blitz`).
+-   `time_control`: The time allotted to each player, with the number of minutes and the increment (time in seconds added to a player's clock after each move). For example, `10+0`.
+-   `white`: The player who played with the white pieces. For example, `iEnjoySomeChess`.
+-   `white_elo`: The rating of the player who played with the white pieces.
+-   `black`: The player who played with the black pieces. For example, `iEnjoySomeChess`.
+-   `black_elo`: The rating of the player who played with the black pieces.
+-   `rating_difference`: The absolute value of the rating difference between `white_elo` and `black_elo`.
+-   `termination`: The ending of the game. For example, `time`, `checkmate`, `resignation`, among other values.
+-   `n_moves`: The number of moves in the game, noting that both players each making one move counts as one move.
+-   `result`: The result with format "white-black", where a loss is zero points, a draw is half of a point, and a win is one point. For example, `1-0`.
+-   `opening`: The opening, if the opening was recognized as a book opening on Chess.com. For example, `Pawn-Opening-Accelerated-London-System`.
+-   `ECO`: The code (a shorthand) for the opening, if the opening was recognized as a book opening on Chess.com. For example, `A00`.
+-   `opponent`: The opponent of the user whose games you requested.
+-   `opponent_rating`: The rating of the opponent of the user whose games you requested.
+-   `user`: The user whose games you requested. In this case, `iEnjoySomeChess`.
+-   `user_color`: The color of the pieces played by the user whose game you requested.
+-   `user_result`: The result of the game from the perspective of `user`. For example, `win`, `loss`, or `draw`.
+-   `user_rating`: The rating of the user whose games you requested.
+-   `time_UTC`: The date and time (UTC) at the beginning of the game. For example, `2022-08-23 21:22:52`.
+-   `end_time_UTC`: The date and time (UTC) at the end of the game. For example, `2022-08-23 21:36:19`.
+-   `time_CDT`: The date and time (CDT) at the beginning of the game. For example, `2022-08-23 16:22:52`.
+-   `end_time_CDT`: The date and time (CDT) at the end of the game. For example, `2022-08-23 16:36:19`.
+-   `previous_time_CDT`: The date and time (CDT) at the beginning of the previous game played by the user. For example, `2022-08-23 16:06:06`.
+-   `time_diff`: The difference in time between `previous_time_CDT` and `time_CDT`.
+-   `hour_interval`: The hour (CDT) during which the game was played. For example, `16:00` if the game was played at `2022-08-23 16:06:06`.
+-   `link`: The link to the game on Chess.com.
+
+```{r cleaning-chesscom, include = FALSE}
+
+my_chesscom_data <- my_chesscom_data_raw %>% 
+  rename(site = Site,
+         event = time_class,
+         result = Result,
+         white = White,
+         black = Black,
+         white_elo = WhiteElo,
+         black_elo = BlackElo,
+         time_control = TimeControl,
+         end_date = EndDate,
+         end_time = EndTime,
+         link = Link,
+         user = Username,
+         user_color = UserColour,
+         user_result = UserResult,
+         user_rating = UserELO,
+         opponent = UserOpponent,
+         opponent_rating = OpponentELO,
+         termination = GameEnding,
+         opening = Opening,
+         n_moves = n_Moves) %>% 
+  mutate(user_result = case_when(user_result == 'Draw' ~ 'draw',
+                                 user_result == 'Loss' ~ 'loss',
+                                 user_result == 'Win' ~ 'win'),
+         user_color = case_when(user_color == 'Black' ~ 'black',
+                                user_color == 'White' ~ 'white'),
+         termination = case_when(termination == 'by checkmate' ~ 'checkmate',
+                                 termination == 'on time' ~ 'time',
+                                 termination == 'by resignation' ~ 'resignation',
+                                 termination == 'Game drawn by stalemate' ~ 'stalemate',
+                                 termination == 'Game drawn by timeout vs insufficient material' ~ 'timeout vs. insufficient material',
+                                 termination == 'Game drawn by insufficient material' ~ 'insufficient material',
+                                 termination == 'Game drawn by 50-move rule' ~ '50-move rule',
+                                 termination == 'Game drawn by agreement' ~ 'agreed draw',
+                                 termination == 'Game drawn by repetition' ~ 'repetition',
+                                 termination == 'game abandoned' ~ 'abandonment'),
+         intermediate_time = str_c(as.character(UTCDate), ' ', as.character(UTCTime)),
+         intermediate_time1 = str_c(as.character(end_date), ' ', as.character(end_time)),
+         time_UTC = ymd_hms(intermediate_time),
+         end_time_UTC = ymd_hms(intermediate_time1),
+         time_CDT = with_tz(time_UTC),
+         end_time_CDT = with_tz(end_time_UTC),
+         date = date(time_CDT)) %>% 
+  select(-rules,
+         -Event,
+         -Date,
+         -Round,
+         -CurrentPosition,
+         -Timezone,
+         -ECOUrl,
+         -UTCDate,
+         -UTCTime,
+         -Termination,
+         -StartTime,
+         -end_date,
+         -end_time,
+         -Moves,
+         -winner,
+         -DaysTaken,
+         -OpponentColour,
+         -intermediate_time,
+         -intermediate_time1) %>% 
+  filter(event %in% c('rapid', 'blitz', 'bullet')) %>% 
+  mutate(hour_interval = case_when(hour(time_CDT) %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9) ~ str_c('0', hour(time_CDT), ':', '00'),
+                                 hour(time_CDT) %in% c(10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23) ~ str_c(hour(time_CDT), ':', '00'))) %>% 
+  arrange(time_CDT) %>% 
+  mutate(time_diff = as.period(interval(lag(time_CDT), time_CDT)),
+         previous_time_CDT = lag(time_CDT),
+         rating_difference = abs(user_rating - opponent_rating)) %>% 
+  separate(time_control, into = c('time_control_minutes', 'increment'), sep = '\\+') %>% 
+  mutate(increment = replace_na(increment, '0'),
+         time_control = case_when(increment != 'NA' ~ str_c(as.character(as.numeric(time_control_minutes) / 60), '+', increment),
+                                  increment == 'NA' ~ str_c(as.character(as.numeric(time_control_minutes) / 60), '+0'))) %>%
+  select(site,
+         event,
+         time_control,
+         -time_control_minutes,
+         -increment,
+         date,
+         white,
+         white_elo,
+         black,
+         black_elo,
+         rating_difference,
+         termination,
+         n_moves,
+         result,
+         opening,
+         ECO,
+         opponent,
+         opponent_rating,
+         user,
+         user_color,
+         user_result,
+         user_rating,
+         time_UTC,
+         end_time_UTC,
+         time_CDT,
+         end_time_CDT,
+         previous_time_CDT,
+         time_diff,
+         hour_interval,
+         link) %>% 
+  arrange(desc(time_CDT))
+
+# for ordering faceted graphs
+my_chesscom_data$event <- factor(my_chesscom_data$event, 
+                                 levels = c('bullet', 'blitz', 'rapid'))
+  
+# Note: The warning message for NA's occurs when I separate the initial `time_control` variable, since not all games had increment, so rather than "+0" there was nothing.
+
+```
+
+```{r view-chesscom}
+my_chesscom_data %>% 
+  glimpse()
+```
+
+### Lichess
+
+Extracting the data from Lichess, there are 23 variables, and each row has information about a single game. Again, I keep, rename, and edit the core variables, and I create other useful variables, with significant overlap with Chess.com; however, Lichess lacks `n_moves`, `end_time_UTC`, and `end_time_CDT`, while having some additional information:
+
+-   `white_rating_change`: The rating change of the player with the white pieces following the termination of the game.
+-   `black_rating_change`: The rating change of the player with the black pieces following the termination of the game.
+-   `user_rating_change`: The rating change of the user whose game you requested following the termination of the game.
+
+```{r cleaning-lichess, include = FALSE}
+my_lichess_data <- my_lichess_data_raw %>% 
+  rename(event = Event,
+         link = Site,
+         white = White,
+         black = Black,
+         result = Result,
+         white_elo = WhiteElo,
+         black_elo = BlackElo,
+         white_rating_change = WhiteRatingDiff,
+         black_rating_change = BlackRatingDiff,
+         time_control = TimeControl,
+         opening = Opening,
+         termination = Termination,
+         user = Username) %>%
+  mutate(across(everything(), ~ na_if(., '?')),
+         across(contains('elo'), as.numeric),
+         across(ends_with('change'), as.numeric),
+         termination = case_when(termination == 'Time forfeit' ~ 'Time Forfeit',
+                                 TRUE ~ termination),
+         site = 'Lichess',
+         intermediate_time = str_c(as.character(UTCDate), ' ', as.character(UTCTime)),
+         time_UTC = ymd_hms(intermediate_time),
+         time_CDT = with_tz(time_UTC),
+         date = date(time_CDT),
+         event = case_when(event == 'Rated Bullet game' ~ 'bullet',
+                           event == 'Rated Blitz game' ~ 'blitz',
+                           event == 'Rated Rapid game' ~ 'rapid',
+                           event == 'Rated Classical game' ~ 'classical',
+                           event == 'Rated Chess960 game' ~ 'chess960')) %>% 
+  separate(time_control, into = c('time_control_minutes', 'increment'), sep = '\\+') %>% 
+  mutate(time_control = str_c(as.character(as.numeric(time_control_minutes) / 60), '+', increment)) %>% 
+  select(-intermediate_time,
+         -Moves,
+         -Date,
+         -Variant,
+         -FEN,
+         -SetUp,
+         -UTCDate,
+         -UTCTime,
+         -WhiteTitle,
+         -BlackTitle) %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid', 'classical', 'chess960')) %>%
+  mutate(user_result = case_when(white == 'iEnjoySomeChess' & result == '1-0' ~ 'win',
+                                 black == 'iEnjoySomeChess' & result == '0-1' ~ 'win',
+                                 result == '1/2-1/2' ~ 'draw',
+                                 TRUE ~ 'loss'),
+         user_rating = case_when(white == 'iEnjoySomeChess' ~ white_elo,
+                                 black == 'iEnjoySomeChess' ~ black_elo),
+         user_rating_change = case_when(white == 'iEnjoySomeChess' ~ white_rating_change,
+                                        black == 'iEnjoySomeChess' ~ black_rating_change),
+         user_color = case_when(white == 'iEnjoySomeChess' ~ 'white',
+                                black == 'iEnjoySomeChess' ~ 'black'),
+         opponent = case_when(white == 'iEnjoySomeChess' ~ black,
+                              black == 'iEnjoySomeChess' ~ white),
+         opponent_rating = case_when(white == 'iEnjoySomeChess' ~ black_elo,
+                                 black == 'iEnjoySomeChess' ~ white_elo),
+         rating_difference = abs(user_rating - opponent_rating),
+         hour_interval = case_when(hour(time_CDT) %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9) ~ str_c('0', hour(time_CDT), ':', '00'),
+                                 hour(time_CDT) %in% c(10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23) ~ str_c(hour(time_CDT), ':', '00'))) %>% 
+  arrange(time_CDT) %>% 
+  mutate(time_diff = as.period(interval(lag(time_CDT), time_CDT)),
+         previous_time_CDT = lag(time_CDT)) %>%
+  select(site,
+         event,
+         time_control,
+         -time_control_minutes,
+         -increment,
+         date,
+         white,
+         white_elo,
+         black,
+         black_elo,
+         rating_difference,
+         termination,
+         result,
+         white_rating_change,
+         black_rating_change,
+         opening,
+         ECO,
+         opponent,
+         opponent_rating,
+         user,
+         user_color,
+         user_result,
+         user_rating,
+         user_rating_change,
+         time_UTC,
+         time_CDT,
+         previous_time_CDT,
+         time_diff,
+         hour_interval,
+         link) %>% 
+  arrange(desc(time_CDT))
+
+my_lichess_data$event <- factor(my_lichess_data$event, 
+                                 levels = c('bullet', 'blitz', 'rapid', 'classical', 'chess960'))
+```
+
+```{r view-lichess}
+my_lichess_data %>% 
+  glimpse()
+```
+
+## Analysis
+
+While I want to compare data between Chess.com and Lichess, I first want to perform separate analysis for Chess.com and Lichess. I will analyze five main questions:
+
+(1) How do my games end when I lose, draw, and win?
+(2) How often do I play with the white pieces, and how often do I play with the black pieces?
+(3) On average, how much rating do I gain/lose according to color of pieces? According to month?
+(4) What is my longest break from playing on Chess.com? Lichess?
+(5) What times of day am I most active?
+
+After I perform separate analysis for Chess.com and Lichess, I will combine the data sets, and I will perform a combined analysis for Chess.com and Lichess.
+
+### Chess.com
+
+#### Game Termination
+
+> Q: "How do I win games?"
+
+First, let's check how many games I've won in `bullet`, `blitz`, and `rapid`. (Note: I have only played `bullet`, `blitz`, and `rapid` games on Chess.com, but I've played more time controls on Lichess, including`classical` and `chess960`. For the most part, I limit my attention to `bullet`, `blitz`, and `rapid`.)
+
+```{r won-games-chesscom, echo = FALSE}
+won_games_chesscom <- my_chesscom_data %>% 
+  mutate(intermediate = case_when(user_result == 'win' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(won_games = sum(intermediate),
+            total_games = n(),
+            pct_win = mean(intermediate))
+
+knitr::kable(won_games_chesscom, 
+             'pipe', 
+             col.names = c('Event', 'Won Games', 'Total Games', 'Win Percent'))
+```
+
+```{r win-game-termination-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  filter(user_result == 'win',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(won_games_chesscom, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_win_category = n()/won_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_win_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 8) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Win Chess.com Games (2016-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# The following commented code would return a chart with each bar representing a percentage of all won games, rather than percentage, for example, of won bullet games.
+
+# my_chesscom_data %>% 
+#   filter(user_result == 'win',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.text.x = element_blank(),
+#         axis.title.x = element_blank(),
+#         axis.ticks.x = element_blank()) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Win Chess.com Games (2016-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+
+```
+
+> I win a significant portion (74.4%) of `bullet` games by `time`, which makes sense given that `bullet` is faster than `blitz` and `rapid`, where `time` is less of a factor. It's interesting that `abandonment` becomes more important in `blitz` and `rapid` (with values of 1.83% and 2.17%, respectively), as opponents may start a game, but leave due to the time committment. Lastly, whereas my method of winning games is somewhat uniform for `blitz`, I win a significant portion (71.7%) of `rapid` games by `resignation`.
+
+> Q: "How do I lose games?"
+
+First, let's see how many games I've lost across `bullet`, `blitz`, and `rapid`.
+
+```{r lost-games-chesscom, echo = FALSE}
+lost_games_chesscom <- my_chesscom_data %>% 
+  mutate(intermediate = case_when(user_result == 'loss' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(lost_games = sum(intermediate),
+            total_games = n(),
+            pct_loss = mean(intermediate))
+
+knitr::kable(lost_games_chesscom, 
+             'pipe', 
+             col.names = c('Event', 'Lost Games', 'Total Games', 'Loss Percent'))
+
+```
+
+```{r loss-game-termination-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  filter(user_result == 'loss',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(lost_games_chesscom, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_loss_category = n()/lost_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_loss_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 8) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Lose Chess.com Games (2016-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# The following commented code would return a chart with each bar representing a percentage of all lost games, rather than percentage, for example, of lost bullet games.
+
+# my_chesscom_data %>% 
+#   filter(user_result == 'loss',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.text.x = element_blank(),
+#         axis.title.x = element_blank(),
+#         axis.ticks.x = element_blank()) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Lose Chess.com Games (2016-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+
+```
+
+> I lose a significant portion (61.9%) of `bullet` games by `time`, which, again, makes sense given that `bullet` is faster than `blitz` and `rapid`, where `time` is less of a factor. Further, whereas my methods of *winning* `blitz` games were more uniform, I lose a large portion (56.2%) of `blitz` games by `time`.
+
+> Q: "How do I draw games?"
+
+First, let's see how many games I've drawn across `bullet`, `blitz`, and `rapid`.
+
+```{r drawn-games-chesscom, echo = FALSE}
+drawn_games_chesscom <- my_chesscom_data %>% 
+  mutate(intermediate = case_when(user_result == 'draw' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(drawn_games = sum(intermediate),
+            total_games = n(),
+            pct_draw = mean(intermediate))
+
+knitr::kable(drawn_games_chesscom, 
+             'pipe', 
+             col.names = c('Event', 'Drawn Games', 'Total Games', 'Draw Percent'))
+
+```
+
+```{r draw-game-termination-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  filter(user_result == 'draw',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(drawn_games_chesscom, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_draw_category = n()/drawn_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_draw_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 8) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Draw Chess.com Games (2016-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# The following commented code would return a chart with each bar representing a percentage of all drawn games, rather than percentage, for example, of drawn bullet games.
+
+# my_chesscom_data %>% 
+#   filter(user_result == 'draw',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.text.x = element_blank(),
+#         axis.title.x = element_blank(),
+#         axis.ticks.x = element_blank()) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Draw Chess.com Games (2016-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+
+```
+
+> I draw a large portion (57.8%) of my `bullet` games by `timeout vs. insufficient material`, which indicates that in my drawn `bullet` games there are usually no remaining pieces on the board. Mostly, I do not draw my games by `50-move rule`. Further, my methods of drawing `blitz` games are somewhat uniformly distributed, whereas I draw a large portion (47.8%) of my `rapid` games by `agreed draw`.
+
+#### Color of Pieces
+
+> Q: "Do I play with the white or black pieces more?"
+
+```{r black-white-chesscom, echo = FALSE}
+
+black_white_chesscom <- my_chesscom_data %>% 
+  group_by(event) %>% 
+  summarize(num_games = n())
+
+my_chesscom_data %>%
+  left_join(black_white_chesscom, by = 'event') %>% 
+  group_by(event, user_color) %>% 
+  summarize(pct_games = n()/num_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = user_color, y = pct_games, fill = user_color)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.break = 8) +
+  theme_linedraw() +
+  theme(axis.title.x = element_blank()) +
+  scale_fill_manual(values = c("black" = "gray30",
+                                "white" = "papayawhip")) +
+  ylab('Percentage of Games') +
+  ggtitle('Frequency of White and Black Pieces on Chess.com (2016-2022)') +
+  labs(fill = 'Color of Pieces') +
+  facet_wrap(~event)
+
+# The following commented code would return a chart with each bar representing a percentage of all games, rather than percentage, for example, of bullet games.
+
+# my_chesscom_data %>%
+#   ggplot(aes(x = user_color, fill = user_color)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.title.x = element_blank()) +
+#   scale_fill_manual(values = c("black" = "gray30",
+#                                 "white" = "papayawhip")) +
+#   ylab('Percentage of Games') +
+#   ggtitle('Frequency of White and Black Pieces on Chess.com (2016-2022)') +
+#   labs(fill = 'Color of Pieces') +
+#   facet_wrap(~event)
+
+```
+
+> I would expect to play with the white and black pieces with uniformly random probability, that is, 50%, which is approximately true, though for `rapid` I tend to play with the black pieces (52.9%) more than the white pieces (47.1%).
+
+#### Rating Gain/Loss
+
+As stated in **Cleaning the Data**, the data for Chess.com does not have information about rating change, but we can create a `user_rating_change` column, just like Lichess, since we have a complete record of user games, which includes `user_rating`. (Note: Chess.com and Lichess provide separate ratings for different values of `event`; thus, we have to sort by `event`, and subsequently `time_CDT`, before finding the difference between successive values of `user_rating`.)
+
+> Q: "On average, how much rating do I gain/lose with the black and white pieces?"
+
+```{r rating-black-white-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  group_by(event) %>% 
+  arrange(time_CDT) %>% 
+  mutate(user_rating_change = lead(user_rating) - user_rating) %>% 
+  drop_na(user_rating_change) %>% 
+  ungroup() %>% 
+  group_by(user_color, event) %>% 
+  summarize(avg_rating_diff = sum(user_rating_change) / n(),
+            .groups = 'keep') %>%
+  ggplot(aes(x = user_color, y = avg_rating_diff, fill = user_color)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.title.x = element_blank()) +
+  scale_fill_manual(values = c("black" = "gray30",
+                                "white" = "papayawhip")) +
+  ylab('Rating Gain/Loss (ELO)') +
+  ggtitle('Average Rating Gain/Loss on Chess.com (2017-2022)') +
+  labs(fill = 'Color of Pieces') +
+  facet_wrap(~event)
+
+```
+
+> I would expect to gain more rating with the white pieces, rather than the black pieces, since white plays the first opening move, and thus has the first chance to create an advantage, so it's suprising that I gain more rating (it's even suprising that I don't lose rating) with the black pieces. Further, I tend to gain more rating from `rapid` than I gain from `bullet` or `blitz`. I have not played as many `rapid` games as `bullet` and `blitz` games, so perhaps my rating is cathcing up to my skill level.
+
+> Q: "On average, how much rating do I gain/lose in a given month?"
+
+```{r month-performance-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  group_by(event) %>% 
+  arrange(time_CDT) %>% 
+  mutate(user_rating_change = lead(user_rating) - user_rating,
+         month = month(date, label = TRUE)) %>% 
+  drop_na(user_rating_change) %>% 
+  ungroup() %>% 
+  group_by(month) %>% 
+  summarize(avg_rating_change = mean(user_rating_change)) %>% 
+  mutate(category = case_when(avg_rating_change <= 0 ~ '0',
+                              avg_rating_change > 0 ~ '1')) %>% 
+  ggplot(aes(x = month, y = avg_rating_change, fill = category)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(n.breaks = 12) +
+  theme_linedraw() +
+  theme(legend.position = 'none') +
+  scale_fill_manual(values = c('1' = "darkcyan",
+                               '0' = "darkred")) +
+  xlab('Month') +
+  ylab('Rating Gain/Loss (ELO)') +
+  ggtitle('Average ELO Gain/Loss by Month on Chess.com (2017-2022)')
+
+```
+
+> I tend to lose rating around February, whereas other months are mostly consistent, or I gain rating. I don't have an explanation for the rating loss in February.
+
+#### Number of Moves
+
+The extracted data from Chess.com has information about the number of moves (`n_moves`) for each game. In addition to the five main questions stated under **analysis**, I include the following question:
+
+> Q: "How long are my games in number of moves?"
+
+```{r n_moves-chesscom, echo = FALSE}
+
+my_chesscom_data %>% 
+  ggplot(aes(y = n_moves, fill = user_color)) +
+  geom_boxplot() +
+  theme_linedraw() +
+  scale_fill_manual(values = c("black" = "gray30",
+                                "white" = "papayawhip")) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  scale_y_continuous(n.breaks = 10) +
+  ylab('Number of Moves') +
+  ggtitle('Number of Moves in my Chess.com Games (2016-2022)') +
+  labs(fill = 'Color of Pieces') +
+  facet_wrap(~event)
+
+```
+
+> My games are typically between 30 and 50 moves, with some notable outliers. The [outlier game](https://www.chess.com/game/live/31112378653) with 142 moves is a game I played with a friend at UW-Madison, where I walked my king, being pursued by a queen, from h8 to b1 to h8, and I went on to win the game!
+
+#### Longest Break
+
+> Q: "What's the longest break I've taken from playing on Chess.com?"
+
+```{r longest-break-chesscom, echo = FALSE}
+
+ break_chesscom <- my_chesscom_data %>% 
+  arrange(desc(time_diff)) %>% 
+  select(previous_time_CDT,
+         time_CDT,
+         time_diff) %>% 
+  slice(1)
+
+knitr::kable(break_chesscom, 
+             'pipe', 
+             col.names = c('Previous Game Time (CDT)', 'Next Game Time (CDT)', 'Time Difference'))
+
+```
+
+> My longest break from Chess.com was 6 Months and 12 Days, which time elapsed between April 13, 2016 and October 26, 2016. Considering I started playing on Chess.com in January 2016, said break was probably a natural waning of interest, since I wasn't as enamored with chess then as I am now.
+
+#### Time of Day
+
+> Q: "What times of day am I most active?"
+
+```{r time-of-day-chesscom, echo = FALSE}
+
+# all games
+my_chesscom_data %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'darkolivegreen') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Games') +
+  ggtitle('Time of Day when I Play Chess.com Games (2016-2022)')
+
+# bullet games
+my_chesscom_data %>% 
+  filter(event == 'bullet') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'darkolivegreen') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Bullet Games') +
+  ggtitle('Time of Day when I Play Chess.com Bullet Games (2016-2022)')
+
+# blitz games
+my_chesscom_data %>% 
+  filter(event == 'blitz') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'darkolivegreen') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Blitz Games') +
+  ggtitle('Time of Day when I Play Chess.com Blitz Games (2016-2022)')
+
+# rapid games
+my_chesscom_data %>% 
+  filter(event == 'rapid') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'darkolivegreen') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Rapid Games') +
+  ggtitle('Time of Day when I Play Chess.com Rapid Games (2016-2022)')
+
+```
+
+> I have not played any games at 23:00 or 24:00 (00:00), and I play a lot of games in the evening, between 16:00 and 19:00. I tend to play `rapid` games either in the morning (08:00 to 09:00) or the evening (16:00 to 19:00).
+
+### Lichess
+
+#### Game Termination
+
+The exported Lichess data only distinguishes between `Normal` and `Time Forfeit` for the variable `termination`, so we don't have the same breakdown as Chess.com. As such, I exclude `classical` (longer time control), since `Time Forfeit` is not a strong factor for `classical`. (Note: Again, I did not play `classical` games on Chess.com.)
+
+> Q: "How do I win games?"
+
+First, let's see how many games I've won across `bullet`, `blitz`, and `rapid`.
+
+```{r won-games-lichess, echo = FALSE}
+won_games_lichess <- my_lichess_data %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid')) %>%
+  mutate(intermediate = case_when(user_result == 'win' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(won_games = sum(intermediate),
+            total_games = n(),
+            pct_win = mean(intermediate))
+
+knitr::kable(won_games_lichess, 
+             'pipe', 
+             col.names = c('Event', 'Won Games', 'Total Games', 'Win Percent'))
+
+```
+
+```{r win-game-termination-lichess, echo = FALSE}
+my_lichess_data %>% 
+  filter(user_result == 'win',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(won_games_lichess, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_win_category = n()/won_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_win_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 8) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Win Lichess Games (2017-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# my_lichess_data %>% 
+#   filter(user_result == 'win',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.text.x = element_blank(),
+#         axis.ticks.x = element_blank()) +
+#   scale_fill_manual(values = c("Normal" = "darkgoldenrod",
+#                                 "Time Forfeit" = "gray")) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Win Lichess Games (2017-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+```
+
+> Again, I win a large portion (52.5%) of `bullet` games by `Time Forfeit`, which makes sense given that `bullet` is faster than `blitz` and `rapid`, where `time` is less of a factor, as evidenced by the decreasing percentage of `Time Forfeit` from `bullet` to `blitz`, and from `blitz` to `rapid`.
+
+> Q: "How do I lose games?"
+
+First, let's see how many games I've lost across `bullet`, `blitz`, and `rapid`.
+
+```{r lost-games-lichess, echo = FALSE}
+lost_games_lichess <- my_lichess_data %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid')) %>%
+  mutate(intermediate = case_when(user_result == 'loss' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(lost_games = sum(intermediate),
+            total_games = n(),
+            pct_loss = mean(intermediate))
+
+knitr::kable(lost_games_lichess, 
+             'pipe', 
+             col.names = c('Event', 'Lost Games', 'Total Games', 'Loss Percent'))
+
+```
+
+```{r loss-game-termination-lichess, echo = FALSE}
+my_lichess_data %>% 
+  filter(user_result == 'loss',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(lost_games_lichess, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_loss_category = n()/lost_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_loss_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 8) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Lose Lichess Games (2017-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# my_lichess_data %>% 
+#   filter(user_result == 'loss',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   scale_fill_manual(values = c("Normal" = "darkgoldenrod",
+#                                 "Time Forfeit" = "gray")) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Lose Lichess Games (2017-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+```
+
+Whereas I won less and less games by `Time Forfeit` from `bullet` to `blitz` to `rapid`, I lose a significant portion (62.3%) of `rapid` games by `Time Forfeit`. As I play `rapid` games with a `time_control` of `10+0` (no increment, that is, no time added after each move), I need to work on my time management.
+
+> Q: "How do I draw games?"
+
+First, let's see how many games I've drawn across `bullet`, `blitz`, and `rapid`.
+
+```{r drawn-games-lichess, echo = FALSE}
+drawn_games_lichess <- my_lichess_data %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid')) %>%
+  mutate(intermediate = case_when(user_result == 'draw' ~ 1,
+                         TRUE ~ 0)) %>% 
+  group_by(event) %>% 
+  summarize(drawn_games = sum(intermediate),
+            total_games = n(),
+            pct_draw = mean(intermediate))
+
+knitr::kable(drawn_games_lichess, 
+             'pipe', 
+             col.names = c('Event', 'Drawn Games', 'Total Games', 'Draw Percent'))
+
+```
+
+```{r draw-game-termination-lichess, echo = FALSE}
+my_lichess_data %>% 
+  filter(user_result == 'draw',
+         event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  left_join(drawn_games_lichess, by = 'event') %>% 
+  group_by(event, termination) %>% 
+  summarize(pct_draw_category = n()/drawn_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = termination, y = pct_draw_category, fill = termination)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format()) +
+  theme_linedraw() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  xlab('Game Termination') +
+  ylab('Percentage of Games') +
+  ggtitle('How I Draw Lichess Games (2017-2022)') +
+  labs(fill = 'Game Termination') +
+  facet_wrap(~event)
+
+# my_lichess_data %>% 
+#   filter(user_result == 'loss',
+#          event %in% c('bullet', 'blitz', 'rapid')) %>% 
+#   ggplot(aes(x = termination, fill = termination)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   scale_fill_manual(values = c("Normal" = "darkgoldenrod",
+#                                 "Time Forfeit" = "gray")) +
+#   xlab('Game Termination') +
+#   ylab('Percentage of Games') +
+#   ggtitle('How I Lose Lichess Games (2017-2022)') +
+#   labs(fill = 'Game Termination') +
+#   facet_wrap(~event)
+```
+
+> The breakdown of drawn games on Lichess isn't too useful, since it's rare to draw games by `Time Forfeit`, unless no pieces remain on the board, which appears to occur mostly for `bullet` games on Lichess. We saw the same trend on Chess.com.
+
+#### Color of Pieces
+
+> Q: "Do I play with the white or black pieces more?"
+
+```{r black-white-lichess, echo = FALSE}
+
+black_white_lichess <- my_lichess_data %>% 
+  group_by(event) %>%
+  summarize(num_games = n())
+
+my_lichess_data %>%
+  filter(event %in% c('bullet', 'blitz', 'rapid', 'classical')) %>% 
+  left_join(black_white_lichess, by = 'event') %>% 
+  group_by(event, user_color) %>% 
+  summarize(pct_games = n()/num_games,
+            .groups = 'keep') %>% 
+  distinct() %>% 
+  ggplot(aes(x = user_color, y = pct_games, fill = user_color)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(labels = percent_format(), n.break = 10) +
+  theme_linedraw() +
+  theme(axis.title.x = element_blank()) +
+  scale_fill_manual(values = c("black" = "gray30",
+                                "white" = "papayawhip")) +
+  ylab('Percentage of Games') +
+  ggtitle('Frequency of White and Black Pieces on Lichess (2017-2022)') +
+  labs(fill = 'Color of Pieces') +
+  facet_wrap(~event)
+
+# The following commented code would return a chart with each bar representing a percentage of all games, rather than percentage, for example, of bullet games.
+
+# my_lichess_data %>% 
+#   filter(!(event %in% c('classical', 'chess960'))) %>% 
+#   ggplot(aes(x = user_color, fill = user_color)) +
+#   geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black') +
+#   scale_y_continuous(labels = percent_format()) +
+#   theme_linedraw() +
+#   theme(axis.title.x = element_blank()) +
+#   scale_fill_manual(values = c("black" = "gray30",
+#                                 "white" = "papayawhip")) +
+#   ylab('Percentage of Games') +
+#   ggtitle('Lichess Games with Black and White Pieces (2017-2022)') +
+#   labs(fill = 'Color of Pieces') +
+#   facet_wrap(~event)
+
+```
+
+> Again, I would expect to play with the white and black pieces with uniformly random probability, that is, 50%, which is approximately true, though for `rapid` I tend to play with the white pieces (54.4%) more than the black pieces (45.6%); more suprising, I have only played 8 `classical` games, of which 6 (75.0%) were with the black pieces and 2 (25.0%) were with the white pieces.
+
+#### Rating Gain/Loss
+
+> Q: "On average, how much rating do I gain/lose with the black and white pieces?"
+
+```{r rating-black-white-lichess, echo = FALSE}
+
+# If we were to include `classical`, we would see large rating gain, since when you start playing in an `event`, Lichess offers a provisional rating; as I haven't played many `classical` games, I have gained significant rating, and I have not leveled out my rating. Thus, we exclude `classical`.
+
+my_lichess_data %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  group_by(user_color, event) %>% 
+  summarize(avg_rating_diff = sum(user_rating_change) / n(),
+            .groups = 'keep') %>%
+  ggplot(aes(x = user_color, y = avg_rating_diff, fill = user_color)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.title.x = element_blank()) +
+  scale_fill_manual(values = c("black" = "gray30",
+                                "white" = "papayawhip")) +
+  xlab('User Color') +
+  ylab('Rating Gain/Loss (ELO)') +
+  ggtitle('Average Rating Gain/Loss on Lichess (2017-2022)') +
+  labs(fill = 'Color of Pieces') +
+  facet_wrap(~event)
+```
+
+> I tend to lose rating with the black pieces on Lichess, whereas I tend to gain rating with the white pieces on Lichess. Compared to Chess.com, this is more consistent with my expectations.
+
+> Q: "On average, how much rating do I gain/lose in a given month?"
+
+```{r month-performance-lichess, echo = FALSE}
+
+my_lichess_data %>% 
+  mutate(month = month(date, label = TRUE)) %>% 
+  group_by(month) %>% 
+  summarize(avg_rating_change = mean(user_rating_change)) %>% 
+  mutate(category = case_when(avg_rating_change <= 0 ~ '0',
+                              avg_rating_change > 0 ~ '1')) %>% 
+  ggplot(aes(x = month, y = avg_rating_change, fill = category)) +
+  geom_col(color = 'black') +
+  scale_y_continuous(n.breaks = 12) +
+  theme_linedraw() +
+  theme(legend.position = 'none') +
+  scale_fill_manual(values = c('1' = "darkcyan",
+                               '0' = "darkred")) +
+  xlab('Month') +
+  ylab('Rating Gain/Loss (ELO)') +
+  ggtitle('Average ELO Gain/Loss by Month on Lichess (2017-2022)')
+
+```
+
+> I tend to lose rating during May, June, and July, whereas I tend to gain rating in other months. What's up with summer?
+
+#### Longest Break
+
+```{r longest-break-lichess, echo = FALSE}
+
+break_lichess <- my_lichess_data %>% 
+  arrange(desc(time_diff)) %>% 
+  select(previous_time_CDT,
+         time_CDT,
+         time_diff) %>% 
+  slice(1)
+
+knitr::kable(break_lichess, 
+             'pipe', 
+             col.names = c('Previous Game Time (CDT)', 'Next Game Time (CDT)', 'Time Difference'))
+
+```
+
+> My longest break from Lichess was 4 Months and 6 Days, which time elapsed between March 7, 2022 and July 14, 2022. Really, this year? I went to Alaska in June; otherwise, I don't have an explanation for the break. *Zugzwang* with my courses (quantum mechanics, thermal physics, and laboratory), perhaps?
+
+#### Time of Day
+
+> Q: "What times of day am I most active?"
+
+```{r time-of-day-lichess, echo = FALSE}
+
+# all games
+my_lichess_data %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'lightcoral') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Games') +
+  ggtitle('Time of Day when I Play Lichess Games (2017-2022)')
+
+# bullet games
+my_lichess_data %>% 
+  filter(event == 'bullet') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'lightcoral') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Bullet Games') +
+  ggtitle('Time of Day when I Play Lichess Bullet Games (2017-2022)')
+
+# blitz games
+my_lichess_data %>% 
+  filter(event == 'blitz') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'lightcoral') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Blitz Games') +
+  ggtitle('Time of Day when I Play Lichess Blitz Games (2017-2022)')
+
+# rapid games
+my_lichess_data %>% 
+  filter(event == 'rapid') %>% 
+  ggplot(aes(x = hour_interval)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', fill = 'lightcoral') +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  xlab('Time of Day (CT)') +
+  ylab('Percent of Rapid Games') +
+  ggtitle('Time of Day when I Play Lichess Rapid Games (2017-2022)')
+
+```
+
+> I tend to play `rapid` games on Lichess much earlier in the day (07:00, 08:00) than I do `bullet` or `blitz` games. Otherwise, the times are somewhat uniform during mid-day, and they dropoff around nighttime hours.
+
+## Comparison
+
+Now, I will combine the data and perform a combined analysis for Chess.com and Lichess. I drop the columns unique to each data set; then I bind the data sets, so there is one large data set. (Note: The percentages will now be over all games, from both Chess.com and Lichess.)
+
+```{r bind, include = FALSE}
+lichess_bind <- my_lichess_data %>% 
+  select(-white_rating_change,
+         -black_rating_change,
+         -user_rating_change)
+
+chesscom_bind <- my_chesscom_data %>% 
+  select(-n_moves,
+         -end_time_UTC,
+         -end_time_CDT)
+
+combined_chess <- bind_rows(lichess_bind, chesscom_bind) %>% 
+  mutate(termination = case_when(termination == 'Normal' ~ 'Normal',
+                   termination == 'Time Forfeit' ~ 'Time Forfeit',
+                   termination == 'time' ~ 'Time Forfeit',
+                   TRUE ~ 'Normal'))
+```
+
+#### Start Date/Total Games
+
+> Q: "When did I start playing on either site?"
+
+```{r start-date-both-sites, echo = FALSE}
+
+start_both_sites <- combined_chess %>% 
+  group_by(site) %>% 
+  summarize(earliest_game_date = min(time_CDT))
+
+knitr::kable(start_both_sites, 
+             'pipe', 
+             col.names = c('Site', 'Earliest Game Time (CDT)'))
+
+```
+
+> Q: "How many games have I played on each site? On which site have I played more games?"
+
+```{r games-played-both-sites, echo = FALSE}
+
+games_both_sites <- combined_chess %>% 
+  group_by(site) %>% 
+  summarize(games = n(),
+            .groups = 'keep')
+
+knitr::kable(games_both_sites, 
+             'pipe', 
+             col.names = c('Site', 'Games Played'))
+
+combined_chess %>% 
+  mutate(year = year(date)) %>% 
+  group_by(site, year) %>% 
+  summarize(games = n(),
+            .group = 'keep') %>% 
+  ggplot(aes(x = year, y = games, color = site, size = games)) +
+  geom_point() +
+  scale_color_manual(values = c("Chess.com" = "darkolivegreen",
+                                "Lichess" = "lightcoral")) +
+  scale_y_continuous(n.breaks = 12) +
+  xlab('Year') +
+  ylab('Number of Games') +
+  ggtitle('Number of Games on Chess.com and Lichess (2016-2022)') +
+  labs(size = '# of Games', color = 'Site')
+
+```
+
+> I started playing on Chess.com, but I now play primarily on Lichess. My total number of games played on Lichess has surpassed my total number of games played on Chess.com.
+
+#### Time of Day
+
+> # Q: "What times of day am I most active by site?"
+
+```{r time-of-day-both-sites, echo = FALSE}
+
+combined_chess %>% 
+  ggplot(aes(x = hour_interval, fill = site)) +
+  geom_bar(aes(y=(..count..)/sum(..count..)), color = 'black', position = 'dodge2') +
+  theme_linedraw() +
+  scale_y_continuous(labels = percent_format(), n.breaks = 12) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  scale_fill_manual(values = c('Chess.com' = "darkolivegreen",
+                               'Lichess' = "lightcoral")) +
+  xlab('Hour') +
+  ylab('Percentage of Games') +
+  ggtitle('Time of Day when I Play Chess (2016-2022)') +
+  labs(fill = 'Chess Site')
+  
+```
+
+#### Rating
+
+> Q: "What is my highest rating achieved on either site by `event`?"
+
+```{r highest-rating, echo = FALSE}
+
+highest_rating_both_sites <- combined_chess %>% 
+  filter(event %in% c('bullet', 'blitz', 'rapid')) %>% 
+  group_by(site, event) %>% 
+  summarize(highest_rating = max(user_rating),
+            .groups = 'drop') %>% 
+  arrange(event)
+
+knitr::kable(highest_rating_both_sites, 
+             'pipe', 
+             col.names = c('Site', 'Event', 'Highest Rating'))
+
+```
+
+> Lichess has higher ratings than Chess.com, and on average my rating is around 300-400 points lower on Chess.com.
+
+## Conclusion
+
+As always, there's a lot of data, and there's a lot more to do with the data. For example, I could generate further insights by filtering the data according to `year`, which could be useful, since my chess skills have improved over time, and thus my above analysis might not reflect the most recent trends in my chess games. Nonetheless, the above analysis provided useful insights, and I plan to update and revisit my chess data in the future.
