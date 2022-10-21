@@ -1,3 +1,9 @@
+---
+title: Analyzing My Chess Data
+author: Maxwell Hanson
+date: 10/21/2022
+---
+
 ## Introduction
 
 I enjoy playing on
