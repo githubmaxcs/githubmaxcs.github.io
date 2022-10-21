@@ -23,6 +23,7 @@ navbar-links:
   Portfolio:
     - Predicting Weather: "/portfolio/madweather"
     - UW-Madison GPA: "/portfolio/uwmad-gpa"
+    - My Chess Data: "/portfolio/chess"
   About Me: "aboutme"
   Resume: "/assets/img/resume-hanson-maxwell.pdf"
   Resources:
