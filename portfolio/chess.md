@@ -10,6 +10,8 @@ New York City. I began playing on Chess.com and Lichess in 2016 and
 2017, respectively, so I have years of data, which I will analyze using
 `tidyverse`, `lubridate`, and `chessR` in RStudio.
 
+Download my .Rmd file [here](/portfolio/chess.Rmd).
+
 ## ChessR: Extracting Data
 
 I’m using the package [ChessR](https://github.com/JaseZiv/chessR) to
@@ -293,7 +295,7 @@ First, let’s see how many games I’ve lost across `bullet`, `blitz`, and
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/loss-game-termination-chesscom-1.png)
+![](/assets/img/loss-game-termination-chesscom-1.png)
 
 > I lose a significant portion (61.9%) of `bullet` games by `time`,
 > which, again, makes sense given that `bullet` is faster than `blitz`
@@ -337,7 +339,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/draw-game-termination-chesscom-1.png)
+![](/assets/img/draw-game-termination-chesscom-1.png)
 
 > I draw a large portion (57.8%) of my `bullet` games by
 > `timeout vs. insufficient material`, which indicates that in my drawn
@@ -350,7 +352,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 
 > Q: “Do I play with the white or black pieces more?”
 
-![](chess_files/figure-markdown_strict/black-white-chesscom-1.png)
+![](/assets/img/black-white-chesscom-1.png)
 
 > I would expect to play with the white and black pieces with uniformly
 > random probability, that is, 50%, which is approximately true, though
@@ -370,7 +372,7 @@ the difference between successive values of `user_rating`.)
 > Q: “On average, how much rating do I gain/lose with the black and
 > white pieces?”
 
-![](chess_files/figure-markdown_strict/rating-black-white-chesscom-1.png)
+![](/assets/img/rating-black-white-chesscom-1.png)
 
 > I would expect to gain more rating with the white pieces, rather than
 > the black pieces, since white plays the first opening move, and thus
@@ -383,7 +385,7 @@ the difference between successive values of `user_rating`.)
 
 > Q: “On average, how much rating do I gain/lose in a given month?”
 
-![](chess_files/figure-markdown_strict/month-performance-chesscom-1.png)
+![](/assets/img/month-performance-chesscom-1.png)
 
 > I tend to lose rating around February, whereas other months are mostly
 > consistent, or I gain rating. I don’t have an explanation for the
@@ -397,7 +399,7 @@ stated under **analysis**, I include the following question:
 
 > Q: “How long are my games in number of moves?”
 
-![](chess_files/figure-markdown_strict/n_moves-chesscom-1.png)
+![](/assets/img/n_moves-chesscom-1.png)
 
 > My games are typically between 30 and 50 moves, with some notable
 > outliers. The [outlier
@@ -437,7 +439,10 @@ stated under **analysis**, I include the following question:
 
 > Q: “What times of day am I most active?”
 
-![](chess_files/figure-markdown_strict/time-of-day-chesscom-1.png)![](chess_files/figure-markdown_strict/time-of-day-chesscom-2.png)![](chess_files/figure-markdown_strict/time-of-day-chesscom-3.png)![](chess_files/figure-markdown_strict/time-of-day-chesscom-4.png)
+![](/assets/img/time-of-day-chesscom-1.png)
+![](/assets/img/time-of-day-chesscom-2.png)
+![](/assets/img/time-of-day-chesscom-3.png)
+![](/assets/img/time-of-day-chesscom-4.png)
 
 > I have not played any games at 23:00 or 24:00 (00:00), and I play a
 > lot of games in the evening, between 16:00 and 19:00. I tend to play
@@ -490,7 +495,7 @@ First, let’s see how many games I’ve won across `bullet`, `blitz`, and
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/win-game-termination-lichess-1.png)
+![](/assets/img/win-game-termination-lichess-1.png)
 
 > Again, I win a large portion (52.5%) of `bullet` games by
 > `Time Forfeit`, which makes sense given that `bullet` is faster than
@@ -534,7 +539,7 @@ First, let’s see how many games I’ve lost across `bullet`, `blitz`, and
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/loss-game-termination-lichess-1.png)
+![](/assets/img/loss-game-termination-lichess-1.png)
 
 Whereas I won less and less games by `Time Forfeit` from `bullet` to
 `blitz` to `rapid`, I lose a significant portion (62.3%) of `rapid`
@@ -578,7 +583,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/draw-game-termination-lichess-1.png)
+![](/assets/img/draw-game-termination-lichess-1.png)
 
 > The breakdown of drawn games on Lichess isn’t too useful, since it’s
 > rare to draw games by `Time Forfeit`, unless no pieces remain on the
@@ -589,7 +594,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 
 > Q: “Do I play with the white or black pieces more?”
 
-![](chess_files/figure-markdown_strict/black-white-lichess-1.png)
+![](/assets/img/black-white-lichess-1.png)
 
 > Again, I would expect to play with the white and black pieces with
 > uniformly random probability, that is, 50%, which is approximately
@@ -603,7 +608,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 > Q: “On average, how much rating do I gain/lose with the black and
 > white pieces?”
 
-![](chess_files/figure-markdown_strict/rating-black-white-lichess-1.png)
+![](/assets/img/rating-black-white-lichess-1.png)
 
 > I tend to lose rating with the black pieces on Lichess, whereas I tend
 > to gain rating with the white pieces on Lichess. Compared to
@@ -611,7 +616,7 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 
 > Q: “On average, how much rating do I gain/lose in a given month?”
 
-![](chess_files/figure-markdown_strict/month-performance-lichess-1.png)
+![](/assets/img/month-performance-lichess-1.png)
 
 > I tend to lose rating during May, June, and July, whereas I tend to
 > gain rating in other months. What’s up with summer?
@@ -645,7 +650,10 @@ First, let’s see how many games I’ve drawn across `bullet`, `blitz`, and
 
 > Q: “What times of day am I most active?”
 
-![](chess_files/figure-markdown_strict/time-of-day-lichess-1.png)![](chess_files/figure-markdown_strict/time-of-day-lichess-2.png)![](chess_files/figure-markdown_strict/time-of-day-lichess-3.png)![](chess_files/figure-markdown_strict/time-of-day-lichess-4.png)
+![](/assets/img/time-of-day-lichess-1.png)
+![](/assets/img/time-of-day-lichess-2.png)
+![](/assets/img/time-of-day-lichess-3.png)
+![](/assets/img/time-of-day-lichess-4.png)
 
 > I tend to play `rapid` games on Lichess much earlier in the day
 > (07:00, 08:00) than I do `bullet` or `blitz` games. Otherwise, the
@@ -708,7 +716,7 @@ Lichess.)
     ## `summarise()` has grouped output by 'site'. You can override using the
     ## `.groups` argument.
 
-![](chess_files/figure-markdown_strict/games-played-both-sites-1.png)
+![](/assets/img/games-played-both-sites-1.png)
 
 > I started playing on Chess.com, but I now play primarily on Lichess.
 > My total number of games played on Lichess has surpassed my total
@@ -718,7 +726,7 @@ Lichess.)
 
 > # Q: “What times of day am I most active by site?”
 
-![](chess_files/figure-markdown_strict/time-of-day-both-sites-1.png)
+![](/assets/img/time-of-day-both-sites-1.png)
 
 #### Rating
 
