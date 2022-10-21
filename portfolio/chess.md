@@ -1,5 +1,5 @@
 ---
-title: Analyzing My Chess Data
+title: Analyzing My Chess Data with R
 author: Maxwell Hanson
 date: 10/21/2022
 ---
