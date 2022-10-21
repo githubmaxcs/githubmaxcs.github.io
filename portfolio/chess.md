@@ -719,9 +719,6 @@ Lichess.)
 </tbody>
 </table>
 
-    ## `summarise()` has grouped output by 'site'. You can override using the
-    ## `.groups` argument.
-
 ![](/assets/img/games-played-both-sites-1.png)
 
 > I started playing on Chess.com, but I now play primarily on Lichess.
@@ -730,7 +727,7 @@ Lichess.)
 
 #### Time of Day
 
-> # Q: “What times of day am I most active by site?”
+> Q: “What times of day am I most active by site?”
 
 ![](/assets/img/time-of-day-both-sites-1.png)
 
