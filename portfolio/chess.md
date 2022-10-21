@@ -254,7 +254,7 @@ attention to `bullet`, `blitz`, and `rapid`.)
 </tbody>
 </table>
 
-![](chess_files/figure-markdown_strict/win-game-termination-chesscom-1.png)
+![](/assets/img/win-game-termination-chesscom-1.png)
 
 > I win a significant portion (74.4%) of `bullet` games by `time`, which
 > makes sense given that `bullet` is faster than `blitz` and `rapid`,
