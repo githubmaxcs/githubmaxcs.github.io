@@ -25,7 +25,7 @@ navbar-links:
     - UW-Madison GPA: "/portfolio/uwmad-gpa"
     - My Chess Data: "/portfolio/chess"
   About Me: "aboutme"
-  Resume: "/assets/img/resume-hanson-maxwell.pdf"
+#   Resume: "/assets/img/resume-hanson-maxwell.pdf"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
