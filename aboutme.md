@@ -4,11 +4,13 @@ title: About Me
 subtitle: Mathematics, Physics Undergraduate at University of Wisconsin-Madison
 ---
 
-Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I could ruminate on problems in mathematics, computer science, and physics for a lifetime.
+Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I love thinking about problems in physics, mathematics, and computer science.
 
-Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers, who encouraged me in STEM. Now, I'm a fourth-year undergraduate studying mathematics and physics at the University of Wisconsin-Madison. While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in statistics and programming, hoping to tackle meaning questions after graduation.
+Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers who encouraged me in STEM. Now, I’m a fourth-year undergraduate studying mathematics and physics, with a certificate in data science, at the University of Wisconsin-Madison.
 
-As a student, I have learned to use standard scientific software, including LaTeX and MATLAB, and my favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modelling. Working, I have experience as a marketing intern, developing promotional video cards and using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing data using MATLAB, Python, and R.
+As a student, I have the learned the fundamentals of statistics and programming using Python and R, and I have learned to use standard scientific software, including LaTeX and MATLAB. My favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modeling. Working, I have experience as a marketing intern, developing promotional video cards and cataloging inventory using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing X-ray data using Python and R.
+
+While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in programming and computer science, hoping to tackle meaningful questions after graduation: I'm excited and grateful to be an incoming Client Systems Administrator at Epic Systems, starting July 2023.
 
 I expect to graduate May 2023. If you would like to contact me, please send me an [email](mailto: maxhanson123@outlook.com), or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
