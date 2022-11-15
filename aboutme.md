@@ -6,7 +6,7 @@ subtitle: Mathematics, Physics Undergraduate at University of Wisconsin-Madison
 
 Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I love thinking about problems in physics, mathematics, and computer science.
 
-Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers who encouraged me in STEM. Now, I’m a fourth-year undergraduate studying mathematics and physics, with a certificate in data science, at the University of Wisconsin-Madison.
+Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers who encouraged me in STEM. Now, I’m a fourth-year undergraduate studying mathematics and physics, also pursuing a certificate in data science, at the University of Wisconsin-Madison.
 
 As a student, I have the learned the fundamentals of statistics and programming using Python and R, and I have learned to use standard scientific software, including LaTeX and MATLAB. My favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modeling. Working, I have experience as a marketing intern, developing promotional video cards and cataloging inventory using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing X-ray data using Python and R.
 
