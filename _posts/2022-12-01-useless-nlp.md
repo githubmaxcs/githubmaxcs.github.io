@@ -9,7 +9,7 @@ tags: [mathematics, python, NLP]
 
 # Introduction
 
-I used NLP to gain insight into James Joyce's __Ulysses__ and David Foster Wallace's __Infinite Jest__. It's kind of useless...but kind of fun.
+I used NLP to gain insight into James Joyce's _Ulysses_ and David Foster Wallace's _Infinite Jest_ ("_IJ_"). It's kind of useless...but kind of fun. (I will not include my sources of _Ulysses_ and _IJ_.)
 
 # __Ulysses__, James Joyce
 
@@ -25,3 +25,20 @@ import nltk
 
 ## Preparing the Data
 
+```
+# open and read the file
+open_jj_ulysses = open('james-joyce-ulysses.txt')
+raw_jj_ulysses = open_jj_ulysses.read()
+
+# separate text into a list of words, punctuation marks, and stand-alone characters
+find_words_jj_ulysses = nltk.word_tokenize(raw_jj_ulysses)
+# use the 'nltk' library to perform analysis
+jj_ulysses = nltk.Text(find_words_jj_ulysses)
+
+type(jj_ulysses)
+```
+
+```
+# Out[]: nltk.text.Text
+
+```
