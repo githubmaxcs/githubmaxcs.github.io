@@ -2,7 +2,7 @@
 layout: post
 title: Useless NLP
 subtitle: Ulysses and Infinite Jest
-tags: [mathematics, python, NLP]
+tags: [python, literature, uselesness, NLP]
 ---
 
 # WORK IN PROGRESS
@@ -11,7 +11,7 @@ tags: [mathematics, python, NLP]
 
 I used NLP to gain insight into James Joyce's _Ulysses_ and David Foster Wallace's _Infinite Jest_ ("_IJ_"). It's kind of useless...but kind of fun. (I will not include my sources of _Ulysses_ and _IJ_.)
 
-# __Ulysses__, James Joyce
+# _Ulysses_, James Joyce
 
 ## Libraries and Packages
 
@@ -251,3 +251,191 @@ ulysses_wordcloud = plot_wordcloud(wordcloud)
 ```
 
 ![png](/assets/img/jj_wordcloud.png)
+
+
+# _IJ_, David Foster Wallace
+
+We'll repeat the above analysis, without the more interesting information about quotations.
+
+## Preparing the Data
+
+```python
+# open and read the file #
+open_ij = open('ij.txt')
+raw_ij = open_ij.read()
+
+# separate text into a list of words, punctuation marks, and stand-alone characters #
+find_words_ij = nltk.word_tokenize(raw_ij)
+# use the 'nltk' library to perform analysis #
+ij = nltk.Text(find_words_ij)
+
+type(ij)
+```
+
+```
+# Out[]: nltk.text.Text
+```
+
+## Data Analysis
+
+```python
+ij[0:5]
+```
+
+```
+# Out[]: ['INFINITE', 'JEST', 'by', 'David', 'Foster']
+```
+
+```python
+print("Our text file of 'Infinite Jest' has {} words, punctuation marks, and stand-alone characters!"\
+      .format(len(ij)))
+```
+
+```
+# Out[]: Our text file of 'Infinite Jest' has 625334 words, punctuation marks, and stand-alone characters!
+```
+
+### Words, Words, Words
+
+Again, suppose we're interested in details about words, such as word count, context, and distribution. We can return the count of a word, punctuation mark, or stand-alone character. Thinking, I write from my comfy recumbency. Hmmm...How many times is 'recumbency' used in _IJ_?
+
+```python
+word = input('Enter a word: ') # word = 'recumbency'
+print("The word '{}' is used {} times in 'Infinite Jest'.".format(word, ij.count(word)))
+```
+
+```
+# Out[]: 
+Enter a word: recumbency
+The word 'recumbency' is used 5 times in 'Infinite Jest'.
+```
+
+We can examine the context from a sample of occurences of a word.
+
+```python
+word = input('Enter a word: ') # word = 'DMZ'
+ij.concordance(word)
+```
+
+```
+# Out[]: 
+Enter a word: DMZ
+Displaying 24 of 24 matches:
+lower Allston . The incredibly potent DMZ is apparently classed as a para-metho
+r Ebene or psilocybin or Cylert5656 ; DMZ resembling chemically some miscegenat
+ ) altered.5757 The incredibly potent DMZ is synthesized from a derivative of f
+ng around with ergotic fungi on rye . DMZ 's discovery was the tail-end of the 
+wall-watching , the incredibly potent DMZ has a popular-lay-chemical-undergroun
+ Vietnamese opium , which forget it . DMZ is sometimes also referred to in some
+ts of the allegedly incredibly potent DMZ . Pemulis looks all around behind the
+, Axhandle , is the incredibly potent DMZ . The Great White Shark of organo-syn
+y try to peddle the incredibly potent DMZ around this sorry place ? ’ Pemulis '
+ker 's dozen of the incredibly potent DMZ , Sweet Tart-sized tablets of no part
+ things ring the bell when you key in DMZ . Then they 're all potent this , sin
+One monograph had this toss-off about DMZ where the guy invites you to envision
+ome massive unspecified dose of early DMZ as part of some Army experiment in Ch
+. of the vaunted and elusive compound DMZ or 'Madame Psychosis ' from a small-a
+ple the potentially incredibly potent DMZ in predeter-minedly safe amounts befo
+hering hangover the incredibly potent DMZ might involve .. . and Axford in the 
+ . Pemulis 's only concern is is this DMZ he got for the WhataBurger detectable
+muscimole , which fitviavi 's derived DMZ resembles chemically sort of the way 
+e temporal-perception consequences of DMZ in the literature are , as far as Pem
+ Italian lithographer who 'd ingested DMZ once and made a lithograph comparing 
+ade a lithograph comparing himself on DMZ to a piece of like Futurist sculpture
+ard nobody-understands-me dream . The DMZ and Mermanization were incidental. ’ 
+pping their feet. ’ 'Have I mentioned DMZ does n't show up on a G.C./M.S. ? Str
+amese opium and the incredibly potent DMZ , Sunshine is pentazocine hydrochlori
+```
+
+We can use the `similar()` method to return words that appear in the same context as the specified word, though I'm ignorant about the actual algorithm.
+
+```python
+word = input('Enter a word: ') # word = 'entertainment'
+ij.similar(word)
+```
+
+```
+# Out[]: 
+Enter a word: entertainment
+and way time thing it other man window house moms floor viewer the
+room pain air person door guy bathroom
+```
+
+We can create a word dispersion plot.
+
+```python
+ij.dispersion_plot(['Hal', 'Steeply', 'Gately', 'entertainment', 'DMZ'])
+```
+
+![png](/assets/img/ij_word_dispersion_plot.png)
+
+We can create a distribution of words, punctuation marks, and stand-alone characters, and their corresponding frequencies. Further, we can return the 'n' most common words, punctuation marks, and stand-alone characters.
+
+```python
+frequency_distribution = nltk.FreqDist(ij)
+frequency_distribution.most_common(20)
+```
+
+```
+# Out[]: 
+[('the', 27609),
+ (',', 26703),
+ ('.', 23451),
+ ('and', 20328),
+ ('of', 14433),
+ ('to', 13047),
+ ('a', 11431),
+ ("'s", 10182),
+ ('in', 8685),
+ ('his', 5142),
+ ('that', 4972),
+ ('with', 4548),
+ ('was', 4338),
+ ('he', 4158),
+ ('on', 4140),
+ ('is', 3944),
+ ('I', 3806),
+ ('it', 3792),
+ ('for', 3617),
+ ('at', 3459)]
+```
+
+```python
+word = input('Enter a word: ') # word = 'halated'
+frequency_distribution[word]
+```
+
+```
+Out[]: 2
+```
+
+## Useless Wordcloud
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+from wordcloud import WordCloud, STOPWORDS
+```
+
+```python
+mask = np.array(Image.open('cloud.png')) # masking image
+
+def plot_wordcloud(wordcloud):
+    plt.figure(figsize = (20, 30))
+    plt.imshow(wordcloud)
+    plt.axis('off')
+
+ij_string = ' '.join(ij)
+    
+wordcloud = WordCloud(width= 500, height = 700, random_state=1, max_words = 200,\
+                background_color='black', colormap='rainbow', collocations=False,\
+                stopwords = STOPWORDS.update(['d', "n't", 'll', 'U', 'M', 'E', 'B', 'T', 'P', 've', 'N', 'F', 'W', 'O']),\
+                mask = mask).generate(ij_string)
+```
+
+```python
+ij_wordcloud = plot_wordcloud(wordcloud)
+```
+
+![png](/assets/img/ij_wordcloud.png)
