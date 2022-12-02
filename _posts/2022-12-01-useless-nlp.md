@@ -25,7 +25,7 @@ import nltk
 
 ## Preparing the Data
 
-```
+```python
 # open and read the file
 open_jj_ulysses = open('james-joyce-ulysses.txt')
 raw_jj_ulysses = open_jj_ulysses.read()
@@ -38,7 +38,7 @@ jj_ulysses = nltk.Text(find_words_jj_ulysses)
 type(jj_ulysses)
 ```
 
-```
+```python
 # Out[]: nltk.text.Text
 
 ```
