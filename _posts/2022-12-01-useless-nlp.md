@@ -38,7 +38,7 @@ jj_ulysses = nltk.Text(find_words_jj_ulysses)
 type(jj_ulysses)
 ```
 
-```python
+```
 # Out[]: nltk.text.Text
 ```
 
@@ -48,7 +48,7 @@ type(jj_ulysses)
 jj_ulysses[:4]
 ```
 
-```python
+```
 # Out[]: ['ULYSSES', 'by', 'James', 'Joyce']
 ```
 
@@ -57,7 +57,7 @@ print("Our text file of 'Ulysses' has {} words, punctuation marks, and stand-alo
       .format(len(jj_ulysses)))
 ```
 
-```python
+```
 # Out[]: Our text file of 'Ulysses' has 314766 words, punctuation marks, and stand-alone characters!
 ```
 
@@ -85,7 +85,7 @@ quotes_indices_list = quote_indices()
 print("There are {} (dialogue) quotes in 'Ulysses'.".format(len(quotes_indices_list)))
 ```
 
-```python
+```
 # Out[]: There are 2286 (dialogue) quotes in 'Ulysses'.
 ```
 
@@ -115,7 +115,7 @@ for n in range(1, 10):
     print_quote_n(n)
 ```
 
-```python
+```
 # Out[]: 
 —Introibo ad altare Dei .
 —Come up , Kinch !
@@ -137,7 +137,7 @@ word = input('Enter a word: ') # word = 'presto'
 print("The word {} is used {} times in 'Ulysses'.".format(word, jj_ulysses.count(word)))
 ```
 
-```python
+```
 # Out[]: 
 Enter a word: presto
 The word presto is used 3 times in 'Ulysses'.
@@ -150,7 +150,7 @@ word = input('Enter a word: ') # word = 'presto'
 jj_ulysses.concordance(word)
 ```
 
-```python
+```
 # Out[]: 
 Enter a word: presto
 Displaying 3 of 3 matches:
@@ -166,7 +166,7 @@ word = input('Enter a word: ') # word = 'macintosh'
 jj_ulysses.similar(word)
 ```
 
-```python
+```
 # Out[]: 
 Enter a word: macintosh
 air sea bloom mirror staircase body soul moment all neck voice aunt
@@ -188,7 +188,7 @@ frequency_distribution = nltk.FreqDist(jj_ulysses)
 frequency_distribution.most_common(20)
 ```
 
-```python
+```
 # Out[]: 
 [('.', 19253),
  (',', 16334),
@@ -217,7 +217,7 @@ word = input('Enter a word: ') # word = 'ineluctable'
 frequency_distribution[word]
 ```
 
-```python
+```
 Out[]: 4
 ```
 
