@@ -2,7 +2,7 @@
 layout: post
 title: Useless NLP
 subtitle: Ulysses and Infinite Jest
-tags: [python, literature, uselesness, NLP]
+tags: [python, literature, uselessness, NLP]
 ---
 
 I used NLP to gain insight into James Joyce's _Ulysses_ and David Foster Wallace's _Infinite Jest_ ("_IJ_"). It's kind of useless...but kind of fun. (I will not include my sources of _Ulysses_ and _IJ_.)
