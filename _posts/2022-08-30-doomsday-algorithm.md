@@ -24,15 +24,15 @@ With [**modular arithmetic**](https://en.wikipedia.org/wiki/Modular_arithmetic),
 Here, we consider integers modulo 7:
 
 
-| Congruence Class | \\(n = 0\\)                    | \\(n = 1\\)                         |  \\(n = -1\\)                   | cont’d |
-| :-------------------:   | :-----------------------: | :------------------------: | :------------------------:   | :---: |
-| \\(\{0 + 7(n)\}\\)       | 0 \\(\equiv\\) 0 mod(7)  | 7 \\(\equiv\\) 0 mod(7)   | -7 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{1 + 7(n)\}\\)       | 1 \\(\equiv\\) 1 mod(7)  | 8 \\(\equiv\\) 1 mod(7)   | -6 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{2 + 7(n)\}\\)       | 2 \\(\equiv\\) 2 mod(7)  | 9 \\(\equiv\\) 2 mod(7)   | -5 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{3 + 7(n)\}\\)       | 3 \\(\equiv\\) 3 mod(7)  | 10 \\(\equiv\\) 3 mod(7) | -4 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{4 + 7(n)\}\\)       | 4 \\(\equiv\\) 4 mod(7)  | 11 \\(\equiv\\) 4 mod(7) | -3 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{5 + 7(n)\}\\)       | 5 \\(\equiv\\) 5 mod(7)  | 12 \\(\equiv\\) 5 mod(7) | -2 \\(\equiv\\) 0 mod(7)  | ...     |
-| \\(\{6 + 7(n)\}\\)       | 6 \\(\equiv\\) 6 mod(7)  | 13 \\(\equiv\\) 6 mod(7) | -1 \\(\equiv\\) 0 mod(7)  | ...     |
+| Congruence Class         |  \\(n = 0\\)             | \\(n = 1\\)                |  \\(n = -1\\)             | cont’d  |
+| :-------------------:    | :----------------------: | :------------------------: | :----------------------:  | :---:   |
+| \\(\{0 + 7(n)\}\\)       | 0 \\(\equiv\\) 0 mod(7)  | -7 \\(\equiv\\) 0 mod(7)   | 7 \\(\equiv\\) 0 mod(7)   | ...     |
+| \\(\{1 + 7(n)\}\\)       | 1 \\(\equiv\\) 1 mod(7)  | -6 \\(\equiv\\) 1 mod(7)   | 8 \\(\equiv\\) 0 mod(7)   | ...     |
+| \\(\{2 + 7(n)\}\\)       | 2 \\(\equiv\\) 2 mod(7)  | -5 \\(\equiv\\) 2 mod(7)   | 9 \\(\equiv\\) 0 mod(7)   | ...     |
+| \\(\{3 + 7(n)\}\\)       | 3 \\(\equiv\\) 3 mod(7)  | -4 \\(\equiv\\) 3 mod(7)   | 10 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{4 + 7(n)\}\\)       | 4 \\(\equiv\\) 4 mod(7)  | -3 \\(\equiv\\) 4 mod(7)   | 11 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{5 + 7(n)\}\\)       | 5 \\(\equiv\\) 5 mod(7)  | -2 \\(\equiv\\) 5 mod(7)   | 12 \\(\equiv\\) 0 mod(7)  | ...     |
+| \\(\{6 + 7(n)\}\\)       | 6 \\(\equiv\\) 6 mod(7)  | -1 \\(\equiv\\) 6 mod(7)   | 13 \\(\equiv\\) 0 mod(7)  | ...     |
 
 Since we have seven days in a week, we label the days as follows:
 
