@@ -81,7 +81,7 @@ For example, in a given year, if the doomsday is Monday (with respect to our doo
 
 Second, we establish the doomsday for each centurial year (e.g., 1500, 1600, 1700, etc.). Once we have the doomsday for each centurial year, we can use modular arithmetic to determine the doomsday for any year in a given century, from which we can determine the day of the week of a given date. 
 
-Now, I'm writing as of August 30, 2022, so the nearest doomsday date is August 29, 2022 (8/22), which I know was a Monday. Thus, the doomsday for the year 2022 is Monday. Further, there have been 5 leap years since 2000, so we obtain the offset from 2000 to 2022:
+Now, I'm writing as of August 30, 2022, so the nearest doomsday date is August 29, 2022, which I know was a Monday. Thus, the doomsday for the year 2022 is Monday. Further, there have been 5 leap years since 2000, so we obtain the offset from 2000 to 2022:
 
 $$22 + \lfloor \frac{22}{4} \rfloor = 22 + 5 = 27 \equiv 6 \ \text{mod(}7\text{)} \equiv -1 \ \text{mod(}7\text{)},$$
 
