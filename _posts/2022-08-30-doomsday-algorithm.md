@@ -64,7 +64,7 @@ First, in any given year, there are dates (we’ll call these **doomsday dates**
 
 | Month        | M/D  | Mnemonic                | Complete List |
 | :----------- | :----- | :----------------------- | :--- |
-| January.     | 1/3 (Normal Year) <br> 1/4 (Leap Year) | “3 for 3 out of 4; 4 for 4th” | {1/3, 1/10, 1/17, 1/24, 1/31} (Normal Year) <br> {1/4, 1/11, 1/18, 1/25} (Leap Year) |
+| January      | 1/3 (Normal Year) <br> 1/4 (Leap Year) | “3 for 3 out of 4; 4 for 4th” | {1/3, 1/10, 1/17, 1/24, 1/31} (Normal Year) <br> {1/4, 1/11, 1/18, 1/25} (Leap Year) |
 | February    | 2/28 (Normal Year) <br> 2/29 (Leap Year) | “Last day of February, or March 0” | {2/7, 2/14, 2/21, 2/28} (Normal Year) <br> {2/1, 2/8, 2/15, 2/22, 2/29} (Leap Year) |
 | March        | 3/14 | “Pi Day” | {3/7, 3/14, 3/21, 3/28} |
 | April          | 4/4 | “4/4, 6/6, 8/8, 10/10, 12/12” | {4/4, 4/11, 4/18, 4/25} |
