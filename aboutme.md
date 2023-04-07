@@ -24,7 +24,7 @@ I enjoy playing chess on [Chess.com](https://www.chess.com/member/ienjoysomeches
 
 | ![My Nf6! Chess Game against Stockfish 2300!](/assets/img/Nf6!.gif) |
 | :-----------------------------------------------------------------: |
-| A game with black pieces against Stockfish 2300, with Nf6!!         |
+| A game with black pieces against Stockfish 2300, with Nc3!!         |
 
 #### Reading
 
