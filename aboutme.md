@@ -6,13 +6,13 @@ subtitle: Mathematics, Physics Undergraduate at University of Wisconsin-Madison
 
 Coming from a family of educators, I value curiosity and learning, from reading James Joyce to studying quantum physics, and I love thinking about problems in physics, mathematics, and computer science.
 
-Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers who encouraged me in STEM. Now, I’m a fourth-year undergraduate studying mathematics and physics, also pursuing a certificate in data science, at the University of Wisconsin-Madison.
+Originally, I'm from Springfield, OH, where I attended Shawnee High School, and I had the fortune of having excellent teachers who encouraged me in STEM. Now, after graduating from the University of Wisconsin-Madison in May 2023, I have a Certificate of Data Science and my B.S. in Mathematics, Physics.
 
 As a student, I have learned the fundamentals of statistics and programming using Python and R, and I have learned to use standard scientific software, including LaTeX and MATLAB. My favorite courses at UW-Madison include Applied Mathematical Analysis, Advanced Physics Laboratory, and Data Science Programming and Modeling. Working, I have experience as a marketing intern, developing promotional video cards and cataloging inventory using Microsoft Excel, and I have experience as an undergraduate research assistant, maintaining lab equipment and analyzing X-ray data using Python and R.
 
-While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in programming and computer science, hoping to tackle meaningful questions after graduation: I'm excited and grateful to be an incoming Client Systems Administrator at Epic Systems, starting July 2023.
+While I enjoy pure mathematics, I love real-world, applied problems, not limited to the field of physics, and as such I continue to learn skills in programming and computer science, hoping to tackle meaningful problems in my professional career: I'm excited and grateful to be a Client Systems Administrator at Epic Systems, starting in July 2023.
 
-I expect to graduate May 2023. If you would like to contact me, please send me an [email](mailto: maxhanson123@outlook.com), or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
+If you would like to contact me, please send me an [email](mailto: maxhanson123@outlook.com), or message me on [LinkedIn](https://www.linkedin.com/in/maxwell-hanson/).
 
 ### More About Me
 
